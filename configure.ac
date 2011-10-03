@@ -1,5 +1,6 @@
 AC_INIT([riker],[0.1],[calvin.walton@kepstin.ca])
 
+AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([foreign])
 
 AC_PROG_CC
