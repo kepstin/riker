@@ -1,6 +1,12 @@
+*.c
+*.o
+*.stamp
+.deps
+Makefile
 Makefile.in
 aclocal.m4
 autom4te.cache
 build-aux
 configure
+config.*
 tagread
