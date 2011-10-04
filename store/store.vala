@@ -5,7 +5,12 @@ public class Store {
 	private Sqlite.Database db;
 	
 	public void open() {
+		DirUtils.create_with_parents(Path.get_dirname(path), 0700);
 		var rc = Sqlite.Database.open(path, out db);
+		if (rc != Sqlite.OK) {
+			stderr.printf ("Can't open database: %d, %s\n", rc, db.errmsg ());
+			return;
+		}
 	}
 	
 	public Store() {
