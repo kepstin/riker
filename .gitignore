@@ -1,5 +1,4 @@
 *.c
-*.h
 *.la
 *.lo
 *.o
@@ -16,4 +15,6 @@ configure
 config.*
 libtool
 m4/*.m4
+store/store.h
+store/store.vapi
 tagread
