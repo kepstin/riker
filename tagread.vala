@@ -1,4 +1,6 @@
-class Riker.TagRead : GLib.Object {
+namespace Riker {
+
+class TagRead : GLib.Object {
 
 	public static int main(string[] args) {
 		Gst.init(ref args);
@@ -58,10 +60,32 @@ class Riker.TagRead : GLib.Object {
 					print("\tRelease MBID: %s\n", val);
 				}
 			}
+			
+			tags.foreach((_, tag) => {
+				print("\t%s: ", tag);
+				
+				num = tags.get_tag_size(tag);
+				
+				for (uint i = 0; i < num; ++i) {
+					var val = tags.get_value_index(tag, i);
+					var type = val.type();
+					if (type == typeof (string)) {
+						print("%s", val.get_string());
+					} else if (type == typeof (uint)) {
+						print("%u", val.get_uint());
+					} else if (type == typeof (double)) {
+						print("%g", val.get_double());
+					}
+				}
+				
+				print("\n");
+			});
 		}
 		
 		pipe.set_state(Gst.State.NULL);
 		
 		return 0;
 	}
+}
+
 }
