@@ -5,9 +5,8 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 
-LT_INIT
+LT_INIT([disable-static])
 
-AC_PROG_CC
 AM_PROG_VALAC
 
 PKG_CHECK_MODULES([GLIB], [glib-2.0])

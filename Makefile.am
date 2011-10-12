@@ -1,7 +1,7 @@
 ACLOCAL_AMFLAGS = -I m4
 
 noinst_PROGRAMS = tagread
-noinst_LTLIBRARIES = store/libriker-store.la
+lib_LTLIBRARIES = store/libriker-store.la
 
 store_libriker_store_la_SOURCES = \
 	store/file.vala \
