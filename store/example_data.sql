@@ -20,4 +20,7 @@ INSERT OR IGNORE INTO artist_credit_name (artist_credit, position, artist, name,
 INSERT OR IGNORE INTO artist_credit_name (artist_credit, position, artist, name, join_phrase) VALUES (5, 2, 2, '初音ミク', '・');
 INSERT OR IGNORE INTO artist_credit_name (artist_credit, position, artist, name, join_phrase) VALUES (5, 3, 3, 'GUMI', NULL);
 
+INSERT OR IGNORE INTO recording (id, gid, name, artist_credit) VALUES (1, '71c3db9c-91d7-46d7-ad14-c54944b6bc25', '小さな世界', 2);
+INSERT OR IGNORE INTO recording (id, gid, name, artist_credit) VALUES (2, '976ea82a-9124-43a3-915e-510ee7233c19', '夢地図', 3);
+
 INSERT OR IGNORE INTO tracklist (id, track_count) VALUES (1, 16);
