@@ -66,6 +66,22 @@ CREATE TABLE IF NOT EXISTS tracklist (
 	last_updated	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS medium_format (
+	id		INTEGER PRIMARY KEY NOT NULL,
+	name		VARCHAR NOT NULL,
+	parent		INTEGER REFERENCES medium_format (id)
+);
+
+CREATE TABLE IF NOT EXISTS medium (
+	id		INTEGER PRIMARY KEY NOT NULL,
+	tracklist	INTEGER REFERENCES tracklist (id) NOT NULL,
+	release		INTEGER REFERENCES release (id) NOT NULL,
+	position	INTEGER NOT NULL,
+	medium_format	INTEGER REFERENCES medium_format (id) NOT NULL,
+	name		VARCHAR NOT NULL,
+	last_updated	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS track (
 	id		INTEGER PRIMARY KEY NOT NULL,
 	recording	INTEGER REFERENCES recording (id) NOT NULL,
@@ -79,9 +95,9 @@ CREATE TABLE IF NOT EXISTS track (
 
 CREATE TABLE IF NOT EXISTS file (
 	id		INTEGER PRIMARY KEY NOT NULL,
-	track		INTEGER REFERENCES track (id) NOT NULL,
+	track		INTEGER REFERENCES track (id),
 	recording	INTEGER REFERENCES recording (id) NOT NULL,
-	release		INTEGER REFERENCES release (id) NOT NULL,
+	release		INTEGER REFERENCES release (id),
 	track_position	INTEGER NOT NULL,
 	medium_position	INTEGER NOT NULL,
 	codec		VARCHAR,
