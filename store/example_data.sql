@@ -49,3 +49,5 @@ INSERT OR IGNORE INTO track (id, recording, tracklist, position, name, artist_cr
 INSERT OR IGNORE INTO track (id, recording, tracklist, position, name, artist_credit, length) VALUES (7, 7, 1, 7, 'からくりピエロ', 2, 249000);
 INSERT OR IGNORE INTO track (id, recording, tracklist, position, name, artist_credit, length) VALUES (8, 8, 1, 8, '妄想スケッチ', 2, 222000);
 INSERT OR IGNORE INTO track (id, recording, tracklist, position, name, artist_credit, length) VALUES (9, 9, 1, 9, 'キリトリセン', 3, 235000);
+INSERT OR IGNORE INTO track (id, recording, tracklist, position, name, artist_credit, length) VALUES (10, 10, 1, 10, '綺麗な世界', 2, 300000);
+INSERT OR IGNORE INTO track (id, recording, tracklist, position, name, artist_credit, length) VALUES (11, 11, 1, 11, '396', 2, 244000);
