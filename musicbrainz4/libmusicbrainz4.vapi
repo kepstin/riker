@@ -21,24 +21,24 @@ namespace Mb4 {
 	[Compact]
 	public class Entity {
 		/**
-		 * Get the number of extension attributes for the entry
-		 * @return The number of extension attributes
+		 * Get the number of extension attributes for the entry.
+		 * @return The number of extension attributes.
 		 */
 		public int ext_attributes_size();
 
 		/**
-		 * Get the name of the requested extension attribute
-		 * @param item Item to return
-		 * @param str Array to fill with returned string, or null to find length only
-		 * @return The number of characters in the string to copy (not including terminating null)
+		 * Get the name of the requested extension attribute.
+		 * @param item Item to return.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
 		 */
 		[CCode (cname = "mb4_entity_ext_attribute_name")]
 		public int ext_attribute_name_array(int item, char[]? str);
 
 		/**
-		 * Get the name of the requested extension attribute
-		 * @param item Item to return
-		 * @return The name of the requested extension attribute
+		 * Get the name of the requested extension attribute.
+		 * @param item Item to return.
+		 * @return The name of the requested extension attribute.
 		 */
 		[CCode (cname = "mb4_entity_ext_attribute_name_wrapper")]
 		public string ext_attribute_name(int item) {
@@ -49,18 +49,18 @@ namespace Mb4 {
 		}
 
 		/**
-		 * Get the value of the requested extension attribute
-		 * @param item Item to return
-		 * @param str Array to fill with returned string, or null to find length only
-		 * @return The number of characters in the string to copy (not including terminating null)
+		 * Get the value of the requested extension attribute.
+		 * @param item Item to return.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
 		 */
 		[CCode (cname = "mb4_entity_ext_attribute_value")]
 		public int ext_attribute_value_array(int item, char[]? str);
 
 		/**
-		 * Get the value of the requested extension attribute
-		 * @param item Item to return
-		 * @return The value of the requested extension attribute
+		 * Get the value of the requested extension attribute.
+		 * @param item Item to return.
+		 * @return The value of the requested extension attribute.
 		 */
 		[CCode (cname = "mb4_entity_ext_attribute_value_wrapper")]
 		public string ext_attribute_value(int item) {
@@ -71,24 +71,24 @@ namespace Mb4 {
 		}
 
 		/**
-		 * Get the number of extension elements for the entity
-		 * @return The number of extension elements
+		 * Get the number of extension elements for the entity.
+		 * @return The number of extension elements.
 		 */
 		public int ext_elements_size();
 
 		/**
-		 * Get the name of the requested extension element
-		 * @param item Item to return
-		 * @param str Array to fill with returned string, or null to find length only
-		 * @return The number of characters in the string to copy (not including terminating null)
+		 * Get the name of the requested extension element.
+		 * @param item Item to return.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
 		 */
 		[CCode (cname = "mb4_entity_ext_element_name")]
 		public int ext_element_name_array(int item, char[]? str);
 
 		/**
-		 * Get the name of the requested extension element
-		 * @param item Item to return
-		 * @return The name of the requested extension element
+		 * Get the name of the requested extension element.
+		 * @param item Item to return.
+		 * @return The name of the requested extension element.
 		 */
 		[CCode (cname = "mb4_entity_ext_element_name_wrapper")]
 		public string ext_element_name(int item) {
@@ -99,18 +99,18 @@ namespace Mb4 {
 		}
 
 		/**
-		 * Get the value of the requested extension element
-		 * @param item Item to return
-		 * @param str Array to fill with returned string, or null to find length only
-		 * @return The number of characters in the string to copy (not including terminating null)
+		 * Get the value of the requested extension element.
+		 * @param item Item to return.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
 		 */
 		[CCode (cname = "mb4_entity_ext_element_value")]
 		public int ext_element_value_array(int item, char[]? str);
 
 		/**
-		 * Get the value of the requested extension element
-		 * @param item Item to return
-		 * @return The value of the requested extension element
+		 * Get the value of the requested extension element.
+		 * @param item Item to return.
+		 * @return The value of the requested extension element.
 		 */
 		[CCode (cname = "mb4_entity_ext_element_value_wrapper")]
 		public string ext_element_value(int item) {
@@ -121,26 +121,31 @@ namespace Mb4 {
 		}
 	}
 
+	/**
+	 * A variant name primarily used as a search help.
+	 *
+	 * See [http://musicbrainz.org/doc/Aliases|Aliases]
+	 */
 	[Compact]
 	[CCode (free_function = "mb4_alias_delete")]
 	public class Alias: Entity {
 		/**
-		 * Create a copy of an Alias object
-		 * @alias Object to copy
+		 * Create a copy of an Alias object.
+		 * @alias Object to copy.
 		 */
 		[CCode (cname = "mb4_alias_clone")]
 		public Alias.copy(Alias alias);
 
 		/**
-		 * Get the Alias locale (Country + Language/Script)
-		 * @param str Array to fill with returned string, or null to find length only
-		 * @return The number of characters in the string to copy (not including terminating null)
+		 * Get the Alias locale (Country + Language/Script).
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
 		 */
 		[CCode (cname = "mb4_alias_get_locale")]
 		public int get_locale_array(char[]? str);
 
 		/**
-		 * The Alias locale (Country + Language/Script)
+		 * The Alias locale (Country + Language/Script).
 		 */
 		public string locale {
 			[CCode (cname = "mb4_alias_get_locale_wrapper")]
@@ -153,15 +158,15 @@ namespace Mb4 {
 		}
 
 		/**
-		 * Get the Alias text
-		 * @param str Array to fill with returned string, or null to find length only
-		 * @return The number of characters in the string to copy (not including terminating null)
+		 * Get the Alias text.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
 		 */
 		[CCode (cname = "mb4_alias_get_text")]
 		public int get_text_array(char[]? str);
 
 		/**
-		 * The Alias text
+		 * The Alias text.
 		 */
 		public string text {
 			[CCode (cname = "mb4_alias_get_text_wrapper")]
@@ -174,26 +179,32 @@ namespace Mb4 {
 		}
 	}
 
+	/**
+	 * Text fields, functioning like a miniature wiki, that can be added to
+	 * various MusicBrainz entities.
+	 *
+	 * See [http://musicbrainz.org/doc/Annotation|Annotation]
+	 */
 	[Compact]
 	[CCode (free_function = "mb4_annotation_delete")]
 	public class Annotation: Entity {
 		/**
-		 * Create a copy of an Annotation object
-		 * @annotation Object to copy
+		 * Create a copy of an Annotation object.
+		 * @annotation Object to copy.
 		 */
 		[CCode (cname = "mb4_annotation_clone")]
 		public Annotation.copy(Annotation annotation);
 
 		/**
-		 * Get the type of the entity the Annotation is associated with
-		 * @param str Array to fill with returned string, or null to find length only
-		 * @return The number of characters in the string to copy (not including terminating null)
+		 * Get the type of the entity the Annotation is associated with.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
 		 */
 		[CCode (cname = "mb4_annotation_get_type")]
 		public int get_type_array(char[]? str);
 
 		/**
-		 * The type of the entity the Annotation is associated with
+		 * The type of the entity the Annotation is associated with.
 		 */
 		public string type {
 			[CCode (cname = "mb4_annotation_get_type_wrapper")]
@@ -206,15 +217,15 @@ namespace Mb4 {
 		}
 
 		/**
-		 * Get the MBID of the entity the Annotation is associated with
-		 * @param str Array to fill with returned string, or null to find length only
-		 * @return The number of characters in the string to copy (not including terminating null)
+		 * Get the MBID of the entity the Annotation is associated with.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
 		 */
 		[CCode (cname = "mb4_annotation_get_entity")]
 		public int get_entity_array(char[]? str);
 
 		/**
-		 * The MBID of the entity the Annotation is associated with
+		 * The MBID of the entity the Annotation is associated with.
 		 */
 		public string entity {
 			[CCode (cname = "mb4_annotation_get_entity_wrapper")]
@@ -227,15 +238,15 @@ namespace Mb4 {
 		}
 
 		/**
-		 * Get the name of the entity the Annotation is associated with
-		 * @param str Array to fill with returned string, or null to find length only
-		 * @return The number of characters in the string to copy (not including terminating null)
+		 * Get the name of the entity the Annotation is associated with.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
 		 */
 		[CCode (cname = "mb4_annotation_get_name")]
 		public int get_name_array(char[]? str);
 
 		/**
-		 * The name of the entity the Annotation is associated with
+		 * The name of the entity the Annotation is associated with.
 		 */
 		public string name {
 			[CCode (cname = "mb4_annotation_get_name_wrapper")]
@@ -248,15 +259,15 @@ namespace Mb4 {
 		}
 
 		/**
-		 * Get the content of the Annotation
-		 * @param str Array to fill with returned string, or null to find length only
-		 * @return The number of characters in the string to copy (not including terminating null)
+		 * Get the content of the Annotation.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
 		 */
 		[CCode (cname = "mb4_annotation_get_text")]
 		public int get_text_array(char[]? str);
 
 		/**
-		 * The content of the Annotation
+		 * The content of the Annotation.
 		 */
 		public string text {
 			[CCode (cname = "mb4_annotation_get_text_wrapper")]
@@ -269,79 +280,171 @@ namespace Mb4 {
 		}
 	}
 
+	/**
+	 * A person, group of people, or other contributor or credited entity
+	 * on a musical work.
+	 *
+	 * See [http://musicbrainz.org/doc/Artist|Artist]
+	 */
 	[Compact]
 	[CCode (free_function = "mb4_artist_delete")]
 	public class Artist: Entity {
+		/**
+		 * Create a copy of an Artist object.
+		 * @artist Object to copy.
+		 */
 		[CCode (cname = "mb4_artist_clone")]
 		public Artist.copy(Artist artist);
+
+		/**
+		 * Get the MBID of the Artist.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_artist_get_id")]
 		public int get_id_array(char[]? str);
+
+		/**
+		 * The MBID of the Artist.
+		 *
+		 * See [http://musicbrainz.org/doc/MusicBrainz_Identifier|MusicBrainz Identifier]
+		 */
 		public string id {
 			[CCode (cname = "mb4_artist_get_id_wrapper")]
 			owned get {
 				int size = get_id_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_id_array(buf);
 				return (string) buf;
 			}
 		}
+
+		/**
+		 * Get the type of the Artist.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_artist_get_type")]
 		public int get_type_array(char[]? str);
+
+		/**
+		 * The type of the artist.
+		 *
+		 * See [http://musicbrainz.org/doc/Artist_Type|Artist Type]
+		 */
 		public string type {
 			[CCode (cname = "mb4_artist_get_type_wrapper")]
 			owned get {
 				int size = get_type_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_type_array(buf);
 				return (string) buf;
 			}
 		}
+
+		/**
+		 * Get the name of the Artist.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_artist_get_name")]
 		public int get_name_array(char[]? str);
+
+		/**
+		 * The Artist's name.
+		 *
+		 * See [http://musicbrainz.org/doc/Artist_Name|Artist Name]
+		 */
 		public string name {
 			[CCode (cname = "mb4_artist_get_name_wrapper")]
 			owned get {
 				int size = get_name_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_name_array(buf);
 				return (string) buf;
 			}
 		}
+
+		/**
+		 * Get the Artist's sort name.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_artist_get_sortname")]
 		public int get_sortname_array(char[]? str);
+
+		/**
+		 * The Artist's sort name.
+		 *
+		 * See [http://musicbrainz.org/doc/Sort_Name|Sort Name]
+		 */
 		public string sortname {
 			[CCode (cname = "mb4_artist_get_sortname_wrapper")]
 			owned get {
 				int size = get_sortname_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_sortname_array(buf);
 				return (string) buf;
 			}
 		}
+
+		/**
+		 * Get the Artist's gender.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_artist_get_gender")]
 		public int get_gender_array(char[]? str);
+
+		/**
+		 * The Artist's gender.
+		 */
 		public string gender {
 			[CCode (cname = "mb4_artist_get_gender_wrapper")]
 			owned get {
 				int size = get_gender_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_gender_array(buf);
 				return (string) buf;
 			}
 		}
+
+		/**
+		 * Get the Artist's country.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_artist_get_country")]
 		public int get_country_array(char[]? str);
+
+		/**
+		 * The Artist's country.
+		 *
+		 * This will be one of the ISO codes from [http://musicbrainz.org/doc/Release_Country|Release Country]
+		 */
 		public string country {
 			[CCode (cname = "mb4_artist_get_country_wrapper")]
 			owned get {
 				int size = get_country_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_country_array(buf);
 				return (string) buf;
 			}
 		}
+
+		/**
+		 * Get the disambiguation comment for the Artist.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_artist_get_disambiguation")]
 		public int get_disambiguation_array(char[]? str);
+
+		/**
+		 * The disambiguation comment for the artist.
+		 *
+		 * See [http://musicbrainz.org/doc/Disambiguation_Comment|Disambiguation Comment]
+		 */
 		public string disambiguation {
 			[CCode (cname = "mb4_artist_get_disambiguation_wrapper")]
 			owned get {
@@ -351,17 +454,67 @@ namespace Mb4 {
 				return (string) buf;
 			}
 		}
+
+		/**
+		 * The lifespan (begin/end dates) of the Artist.
+		 */
 		public Lifespan? lifespan { get; }
+
+		/**
+		 * A list of {@link Alias}es for the Artist.
+		 */
 		public AliasList? aliaslist { get; }
+
+		/**
+		 * A list of {@link Recording}s by the Artist.
+		 */
 		public RecordingList? recordinglist { get; }
+
+		/**
+		 * A list of {@link Release}s by the Artist.
+		 */
 		public ReleaseList? releaselist { get; }
+
+		/**
+		 * A list of {@link ReleaseGroup}s by the Artist.
+		 */
 		public ReleaseGroupList? releasegrouplist { get; }
+
+		/**
+		 * A list of {@link Label}s associated with the Artist.
+		 *
+		 * It's unknown what this field is for, and it appears to be unused.
+		 */
 		public LabelList? labellist { get; }
+
+		/**
+		 * A list of {@link Work}s to which this Artist contributed.
+		 */
 		public WorkList? worklist { get; }
+
+		/**
+		 * A list of {@link Relation}s linking to this Artist.
+		 */
 		public RelationList? relationlist { get; }
+
+		/**
+		 * A list of {@link Tag}s applied to this Artist.
+		 */
 		public TagList? taglist { get; }
+
+		/**
+		 * A list of {@link UserTag}s applied to this Artist by the current User.
+		 */
 		public UserTagList? usertaglist { get; }
+
+		/**
+		 * The overall {@link Rating} for this Artist.
+		 */
 		public Rating? rating { get; }
+
+		/**
+		 * The {@link UserRating} for this Artist by the current User.
+		 */
 		public UserRating? userrating { get; }
 	}
 
