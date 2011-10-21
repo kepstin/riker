@@ -124,26 +124,50 @@ namespace Mb4 {
 	[Compact]
 	[CCode (free_function = "mb4_alias_delete")]
 	public class Alias: Entity {
+		/**
+		 * Create a copy of an Alias object
+		 * @alias Object to copy
+		 */
 		[CCode (cname = "mb4_alias_clone")]
 		public Alias.copy(Alias alias);
+
+		/**
+		 * Get the Alias locale (Country + Language/Script)
+		 * @param str Array to fill with returned string, or null to find length only
+		 * @return The number of characters in the string to copy (not including terminating null)
+		 */
 		[CCode (cname = "mb4_alias_get_locale")]
 		public int get_locale_array(char[]? str);
+
+		/**
+		 * The Alias locale (Country + Language/Script)
+		 */
 		public string locale {
 			[CCode (cname = "mb4_alias_get_locale_wrapper")]
 			owned get {
 				int size = get_locale_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_locale_array(buf);
 				return (string) buf;
 			}
 		}
+
+		/**
+		 * Get the Alias text
+		 * @param str Array to fill with returned string, or null to find length only
+		 * @return The number of characters in the string to copy (not including terminating null)
+		 */
 		[CCode (cname = "mb4_alias_get_text")]
 		public int get_text_array(char[]? str);
+
+		/**
+		 * The Alias text
+		 */
 		public string text {
 			[CCode (cname = "mb4_alias_get_text_wrapper")]
 			owned get {
 				int size = get_text_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_text_array(buf);
 				return (string) buf;
 			}
