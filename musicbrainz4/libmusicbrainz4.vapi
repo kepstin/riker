@@ -177,48 +177,92 @@ namespace Mb4 {
 	[Compact]
 	[CCode (free_function = "mb4_annotation_delete")]
 	public class Annotation: Entity {
+		/**
+		 * Create a copy of an Annotation object
+		 * @annotation Object to copy
+		 */
 		[CCode (cname = "mb4_annotation_clone")]
 		public Annotation.copy(Annotation annotation);
+
+		/**
+		 * Get the type of the entity the Annotation is associated with
+		 * @param str Array to fill with returned string, or null to find length only
+		 * @return The number of characters in the string to copy (not including terminating null)
+		 */
 		[CCode (cname = "mb4_annotation_get_type")]
 		public int get_type_array(char[]? str);
+
+		/**
+		 * The type of the entity the Annotation is associated with
+		 */
 		public string type {
 			[CCode (cname = "mb4_annotation_get_type_wrapper")]
 			owned get {
 				int size = get_type_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_type_array(buf);
 				return (string) buf;
 			}
 		}
+
+		/**
+		 * Get the MBID of the entity the Annotation is associated with
+		 * @param str Array to fill with returned string, or null to find length only
+		 * @return The number of characters in the string to copy (not including terminating null)
+		 */
 		[CCode (cname = "mb4_annotation_get_entity")]
 		public int get_entity_array(char[]? str);
+
+		/**
+		 * The MBID of the entity the Annotation is associated with
+		 */
 		public string entity {
 			[CCode (cname = "mb4_annotation_get_entity_wrapper")]
 			owned get {
 				int size = get_entity_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_entity_array(buf);
 				return (string) buf;
 			}
 		}
+
+		/**
+		 * Get the name of the entity the Annotation is associated with
+		 * @param str Array to fill with returned string, or null to find length only
+		 * @return The number of characters in the string to copy (not including terminating null)
+		 */
 		[CCode (cname = "mb4_annotation_get_name")]
 		public int get_name_array(char[]? str);
+
+		/**
+		 * The name of the entity the Annotation is associated with
+		 */
 		public string name {
 			[CCode (cname = "mb4_annotation_get_name_wrapper")]
 			owned get {
 				int size = get_name_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_name_array(buf);
 				return (string) buf;
 			}
 		}
+
+		/**
+		 * Get the content of the Annotation
+		 * @param str Array to fill with returned string, or null to find length only
+		 * @return The number of characters in the string to copy (not including terminating null)
+		 */
 		[CCode (cname = "mb4_annotation_get_text")]
 		public int get_text_array(char[]? str);
+
+		/**
+		 * The content of the Annotation
+		 */
 		public string text {
 			[CCode (cname = "mb4_annotation_get_text_wrapper")]
 			owned get {
 				int size = get_text_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_text_array(buf);
 				return (string) buf;
 			}
