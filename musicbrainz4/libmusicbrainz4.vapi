@@ -1,43 +1,121 @@
+/*
+ * Vala bindings for libmusicbrainz4 - Client library to access MusicBrainz
+ * Copyright © 2011 Calvin Walton
+ * Based on code Copyright (C) 2011 Andrew Hawkins
+ *
+ * This file is part of the Riker music player project.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
 [CCode (cheader_filename = "musicbrainz4/mb4_c.h")]
 namespace Mb4 {
 
 	[Compact]
 	public class Entity {
+		/**
+		 * Get the number of extension attributes for the entry
+		 * @return The number of extension attributes
+		 */
 		public int ext_attributes_size();
+
+		/**
+		 * Get the name of the requested extension attribute
+		 * @param item Item to return
+		 * @param str Array to fill with returned string, or null to find length only
+		 * @return The number of characters in the string to copy (not including terminating null)
+		 */
 		[CCode (cname = "mb4_entity_ext_attribute_name")]
 		public int ext_attribute_name_array(int item, char[]? str);
+
+		/**
+		 * Get the name of the requested extension attribute
+		 * @param item Item to return
+		 * @return The name of the requested extension attribute
+		 */
 		[CCode (cname = "mb4_entity_ext_attribute_name_wrapper")]
 		public string ext_attribute_name(int item) {
 			int size = ext_attribute_name_array(item, null);
-			char[] buf = new char[size];
+			char[] buf = new char[size+1];
 			ext_attribute_name_array(item, buf);
 			return (string) buf;
 		}
-		[CCode (cname = "mb4_entity_ext_attribute_name")]
+
+		/**
+		 * Get the value of the requested extension attribute
+		 * @param item Item to return
+		 * @param str Array to fill with returned string, or null to find length only
+		 * @return The number of characters in the string to copy (not including terminating null)
+		 */
+		[CCode (cname = "mb4_entity_ext_attribute_value")]
 		public int ext_attribute_value_array(int item, char[]? str);
-		[CCode (cname = "mb4_entity_ext_attribute_name_wrapper")]
+
+		/**
+		 * Get the value of the requested extension attribute
+		 * @param item Item to return
+		 * @return The value of the requested extension attribute
+		 */
+		[CCode (cname = "mb4_entity_ext_attribute_value_wrapper")]
 		public string ext_attribute_value(int item) {
 			int size = ext_attribute_value_array(item, null);
-			char[] buf = new char[size];
+			char[] buf = new char[size+1];
 			ext_attribute_value_array(item, buf);
 			return (string) buf;
 		}
+
+		/**
+		 * Get the number of extension elements for the entity
+		 * @return The number of extension elements
+		 */
 		public int ext_elements_size();
+
+		/**
+		 * Get the name of the requested extension element
+		 * @param item Item to return
+		 * @param str Array to fill with returned string, or null to find length only
+		 * @return The number of characters in the string to copy (not including terminating null)
+		 */
 		[CCode (cname = "mb4_entity_ext_element_name")]
 		public int ext_element_name_array(int item, char[]? str);
+
+		/**
+		 * Get the name of the requested extension element
+		 * @param item Item to return
+		 * @return The name of the requested extension element
+		 */
 		[CCode (cname = "mb4_entity_ext_element_name_wrapper")]
 		public string ext_element_name(int item) {
 			int size = ext_element_name_array(item, null);
-			char[] buf = new char[size];
+			char[] buf = new char[size+1];
 			ext_element_name_array(item, buf);
 			return (string) buf;
 		}
+
+		/**
+		 * Get the value of the requested extension element
+		 * @param item Item to return
+		 * @param str Array to fill with returned string, or null to find length only
+		 * @return The number of characters in the string to copy (not including terminating null)
+		 */
 		[CCode (cname = "mb4_entity_ext_element_value")]
 		public int ext_element_value_array(int item, char[]? str);
+
+		/**
+		 * Get the value of the requested extension element
+		 * @param item Item to return
+		 * @return The value of the requested extension element
+		 */
 		[CCode (cname = "mb4_entity_ext_element_value_wrapper")]
 		public string ext_element_value(int item) {
 			int size = ext_element_value_array(item, null);
-			char[] buf = new char[size];
+			char[] buf = new char[size+1];
 			ext_element_value_array(item, buf);
 			return (string) buf;
 		}
@@ -46,7 +124,8 @@ namespace Mb4 {
 	[Compact]
 	[CCode (free_function = "mb4_alias_delete")]
 	public class Alias: Entity {
-		public Alias clone();
+		[CCode (cname = "mb4_alias_clone")]
+		public Alias.copy(Alias alias);
 		[CCode (cname = "mb4_alias_get_locale")]
 		public int get_locale_array(char[]? str);
 		public string locale {
@@ -74,7 +153,8 @@ namespace Mb4 {
 	[Compact]
 	[CCode (free_function = "mb4_annotation_delete")]
 	public class Annotation: Entity {
-		public Annotation clone();
+		[CCode (cname = "mb4_annotation_clone")]
+		public Annotation.copy(Annotation annotation);
 		[CCode (cname = "mb4_annotation_get_type")]
 		public int get_type_array(char[]? str);
 		public string type {
@@ -124,7 +204,8 @@ namespace Mb4 {
 	[Compact]
 	[CCode (free_function = "mb4_artist_delete")]
 	public class Artist: Entity {
-		public Artist clone();
+		[CCode (cname = "mb4_artist_clone")]
+		public Artist.copy(Artist artist);
 		[CCode (cname = "mb4_artist_get_id")]
 		public int get_id_array(char[]? str);
 		public string id {
@@ -699,31 +780,81 @@ namespace Mb4 {
 	[CCode (free_function = "mb4_namecredit_delete", lower_case_cprefix="mb4_namecredit_")]
 	public class NameCredit: Entity {
 		public NameCredit clone();
+		[CCode (cname = "mb4_namecredit_get_joinphrase")]
+		public int get_joinphrase_array(char[]? str);
+		public string joinphrase {
+			[CCode (cname = "mb4_namecredit_get_joinphrase_wrapper")]
+			owned get {
+				int size = get_joinphrase_array(null);
+				char[] buf = new char[size];
+				get_joinphrase_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_namecredit_get_name")]
+		public int get_name_array(char[]? str);
+		public string name {
+			[CCode (cname = "mb4_namecredit_get_name_wrapper")]
+			owned get {
+				int size = get_name_array(null);
+				char[] buf = new char[size];
+				get_name_array(buf);
+				return (string) buf;
+			}
+		}
+		public Artist artist { get; }
 	}
 
-
-
-
-
+	[Compact]
+	[CCode (free_function = "mb4_nonmbtrack_delete", lower_case_cprefix="mb4_nonmbtrack_")]
+	public class NonMBTrack: Entity {
+		public NonMBTrack clone();
+		[CCode (cname = "mb4_nonmbtrack_get_title")]
+		public int get_title_array(char[]? str);
+		public string title {
+			[CCode (cname = "mb4_nonmbtrack_get_title_wrapper")]
+			owned get {
+				int size = get_title_array(null);
+				char[] buf = new char[size];
+				get_title_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_nonmbtrack_get_artist")]
+		public int get_artist_array(char[]? str);
+		public string artist {
+			[CCode (cname = "mb4_nonmbtrack_get_artist_wrapper")]
+			owned get {
+				int size = get_artist_array(null);
+				char[] buf = new char[size];
+				get_artist_array(buf);
+				return (string) buf;
+			}
+		}
+		public int length { get; }
+	}
 
 	[Compact]
-	[CCode (free_function = "mb4_attribute_list_delete")]
-	public class AttributeList {
-		public AttributeList clone();
-		public int count { get; }
-		public int offset { get; }
-		[CCode (cname = "mb4_attribute_list_item")]
-		public unowned Attribute get(int item);
-		public int size {
-			[CCode (cname = "mb4_attribute_list_size")]
-			get;
+	[CCode (free_function = "mb4_puid_delete")]
+	public class PUID: Entity {
+		public PUID clone();
+		[CCode (cname = "mb4_puid_get_id")]
+		public int get_id_array(char[]? str);
+		public string id {
+			[CCode (cname = "mb4_puid_get_id_wrapper")]
+			owned get {
+				int size = get_id_array(null);
+				char[] buf = new char[size];
+				get_id_array(buf);
+				return (string) buf;
+			}
 		}
+		public RecordingList? recordinglist { get; }
 	}
 
 	[Compact]
 	[CCode (free_function = "mb4_query_delete")]
 	public class Query {
-		public Query(string user_agent, string? server, int port);
 		public Query clone();
 		public int lasthttpcode { get; }
 		[CCode (cname = "mb4_query_get_lasterrormessage")]
@@ -737,6 +868,7 @@ namespace Mb4 {
 				return (string) buf;
 			}
 		}
+		public Query(string user_agent, string? server, int port);
 		public string username { set; }
 		public string password { set; }
 		public string proxyhost { set; }
@@ -744,30 +876,626 @@ namespace Mb4 {
 		public string proxyusername { set; }
 		public string proxypassword { set; }
 		public ReleaseList lookup_discid(string disc_id);
+		public Release lookup_release(string release);
+		[CCode (cname = "mb4_query_query")]
+		public Metadata query_array(string entity, string? id, string? resource, int num_params, string* param_names, string* param_values);
+		[CCode (cname = "mb4_query_query_wrapper")]
+		public Metadata query(string entity, string? id, string? resource, ...) {
+			string[] param_names = new string[0];
+			string[] param_values = new string[0];
+			var l = va_list();
+			while (true) {
+				string? name = l.arg();
+				if (name == null) {
+					break;
+				}
+				string val = l.arg();
+				param_names += name;
+				param_values += val;
+			}
+			return query_array(entity, id, resource, param_names.length, param_names, param_values);
+		}
+		[CCode (cname = "mb4_query_add_collection_entries")]
+		public bool add_collection_entries_array(string collection, [CCode (array_length_pos=1.5)] string[] entries);
+		[CCode (cname = "mb4_query_add_collection_wrapper")]
+		public bool add_collection_entries(string collection, ...) {
+			string[] entries = new string[0];
+			var l = va_list();
+			while (true) {
+				string? entry = l.arg();
+				if (entry == null) {
+					break;
+				}
+				entries += entry;
+			}
+			return add_collection_entries_array(collection, entries);
+		}
+		[CCode (cname = "mb4_query_delete_collection_entries")]
+		public bool delete_collection_entries_array(string collection, [CCode (array_length_pos=1.5)] string[] entries);
+		[CCode (cname = "mb4_query_delete_collection_wrapper")]
+		public bool delete_collection_entries(string collection, ...) {
+			string[] entries = new string[0];
+			var l = va_list();
+			while (true) {
+				string? entry = l.arg();
+				if (entry == null) {
+					break;
+				}
+				entries += entry;
+			}
+			return delete_collection_entries_array(collection, entries);
+		}
+		[CCode (cname = "tQueryResult")]
+		public enum Result {
+			[CCode (cname = "eQuery_Success")]
+			SUCCESS,
+			[CCode (cname = "eQuery_ConnectionError")]
+			CONNECTION_ERROR,
+			[CCode (cname = "eQuery_Timeout")]
+			TIMEOUT,
+			[CCode (cname = "eQuery_AuthenticationError")]
+			AUTHENTICATION_ERROR,
+			[CCode (cname = "eQuery_FetchError")]
+			FETCH_ERROR,
+			[CCode (cname = "eQuery_RequestError")]
+			REQUEST_ERROR,
+			[CCode (cname = "eQuery_ResourceNotFound")]
+			RESOURCE_NOT_FOUND
+		}
+		public Result lastresult { get; }
 	}
-	
+
 	[Compact]
-	[CCode (free_function = "mb4_release_list_delete")]
-	public class ReleaseList: Entity {
+	[CCode (free_function = "mb4_rating_delete")]
+	public class Rating: Entity {
+		public Rating clone();
+		public int votescount { get; }
+		public double rating { get; }
 	}
-	
+
+	[Compact]
+	[CCode (free_function = "mb4_recording_delete")]
+	public class Recording: Entity {
+		public Recording clone();
+		[CCode (cname = "mb4_recording_get_id")]
+		public int get_id_array(char[]? str);
+		public string id {
+			[CCode (cname = "mb4_recording_get_id_wrapper")]
+			owned get {
+				int size = get_id_array(null);
+				char[] buf = new char[size];
+				get_id_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_recording_get_title")]
+		public int get_title_array(char[]? str);
+		public string title {
+			[CCode (cname = "mb4_recording_get_title_wrapper")]
+			owned get {
+				int size = get_title_array(null);
+				char[] buf = new char[size];
+				get_title_array(buf);
+				return (string) buf;
+			}
+		}
+		public int length { get; }
+		[CCode (cname = "mb4_recording_get_disambiguation")]
+		public int get_disambiguation_array(char[]? str);
+		public string disambiguation {
+			[CCode (cname = "mb4_recording_get_disambiguation_wrapper")]
+			owned get {
+				int size = get_disambiguation_array(null);
+				char[] buf = new char[size];
+				get_disambiguation_array(buf);
+				return (string) buf;
+			}
+		}
+		public ArtistCredit? artistcredit { get; }
+		public ReleaseList? releaselist { get; }
+		public PUIDList? puidlist { get; }
+		public ISRCList? isrclist { get; }
+		public RelationList? relationlist { get; }
+		public TagList? taglist { get; }
+		public UserTagList? usertaglist { get; }
+		public Rating? rating { get; }
+		public UserRating? userrating { get; }
+	}
+
+	[Compact]
+	[CCode (free_function = "mb4_relation_delete")]
+	public class Relation: Entity {
+		public Relation clone();
+		[CCode (cname = "mb4_relation_get_type")]
+		public int get_type_array(char[]? str);
+		public string type {
+			[CCode (cname = "mb4_relation_get_type_wrapper")]
+			owned get {
+				int size = get_type_array(null);
+				char[] buf = new char[size];
+				get_type_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_relation_get_target")]
+		public int get_target_array(char[]? str);
+		public string target {
+			[CCode (cname = "mb4_relation_get_target_wrapper")]
+			owned get {
+				int size = get_target_array(null);
+				char[] buf = new char[size];
+				get_target_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_relation_get_direction")]
+		public int get_direction_array(char[]? str);
+		public string direction {
+			[CCode (cname = "mb4_relation_get_direction_wrapper")]
+			owned get {
+				int size = get_direction_array(null);
+				char[] buf = new char[size];
+				get_direction_array(buf);
+				return (string) buf;
+			}
+		}
+		public AttributeList? attributelist { get; }
+		[CCode (cname = "mb4_relation_get_begin")]
+		public int get_begin_array(char[]? str);
+		public string begin {
+			[CCode (cname = "mb4_relation_get_begin_wrapper")]
+			owned get {
+				int size = get_begin_array(null);
+				char[] buf = new char[size];
+				get_begin_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_relation_get_end")]
+		public int get_end_array(char[]? str);
+		public string end {
+			[CCode (cname = "mb4_relation_get_end_wrapper")]
+			owned get {
+				int size = get_end_array(null);
+				char[] buf = new char[size];
+				get_end_array(buf);
+				return (string) buf;
+			}
+		}
+		public Artist? artist { get; }
+		public Release? release { get; }
+		public ReleaseGroup? releasegroup { get; }
+		public Recording? recording { get; }
+		public Label? label { get; }
+		public Work? work { get; }
+	}
+
+	[Compact]
+	[CCode (free_function = "mb4_release_delete")]
+	public class Release: Entity {
+		public Release clone();
+		[CCode (cname = "mb4_release_get_id")]
+		public int get_id_array(char[]? str);
+		public string id {
+			[CCode (cname = "mb4_release_get_id_wrapper")]
+			owned get {
+				int size = get_id_array(null);
+				char[] buf = new char[size];
+				get_id_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_release_get_title")]
+		public int get_title_array(char[]? str);
+		public string title {
+			[CCode (cname = "mb4_release_get_title_wrapper")]
+			owned get {
+				int size = get_title_array(null);
+				char[] buf = new char[size];
+				get_title_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_release_get_status")]
+		public int get_status_array(char[]? str);
+		public string status {
+			[CCode (cname = "mb4_release_get_status_wrapper")]
+			owned get {
+				int size = get_status_array(null);
+				char[] buf = new char[size];
+				get_status_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_release_get_quality")]
+		public int get_quality_array(char[]? str);
+		public string quality {
+			[CCode (cname = "mb4_release_get_quality_wrapper")]
+			owned get {
+				int size = get_quality_array(null);
+				char[] buf = new char[size];
+				get_quality_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_release_get_disambiguation")]
+		public int get_disambiguation_array(char[]? str);
+		public string disambiguation {
+			[CCode (cname = "mb4_release_get_disambiguation_wrapper")]
+			owned get {
+				int size = get_disambiguation_array(null);
+				char[] buf = new char[size];
+				get_disambiguation_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_release_get_packaging")]
+		public int get_packaging_array(char[]? str);
+		public string packaging {
+			[CCode (cname = "mb4_release_get_packaging_wrapper")]
+			owned get {
+				int size = get_packaging_array(null);
+				char[] buf = new char[size];
+				get_packaging_array(buf);
+				return (string) buf;
+			}
+		}
+		public TextRepresentation? textrepresentation { get; }
+		public ArtistCredit? artistcredit { get; }
+		public ReleaseGroup? releasegroup { get; }
+		[CCode (cname = "mb4_release_get_date")]
+		public int get_date_array(char[]? str);
+		public string date {
+			[CCode (cname = "mb4_release_get_date_wrapper")]
+			owned get {
+				int size = get_date_array(null);
+				char[] buf = new char[size];
+				get_date_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_release_get_country")]
+		public int get_country_array(char[]? str);
+		public string country {
+			[CCode (cname = "mb4_release_get_country_wrapper")]
+			owned get {
+				int size = get_country_array(null);
+				char[] buf = new char[size];
+				get_country_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_release_get_barcode")]
+		public int get_barcode_array(char[]? str);
+		public string barcode {
+			[CCode (cname = "mb4_release_get_barcode_wrapper")]
+			owned get {
+				int size = get_barcode_array(null);
+				char[] buf = new char[size];
+				get_barcode_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_release_get_asin")]
+		public int get_asin_array(char[]? str);
+		public string asin {
+			[CCode (cname = "mb4_release_get_asin_wrapper")]
+			owned get {
+				int size = get_asin_array(null);
+				char[] buf = new char[size];
+				get_asin_array(buf);
+				return (string) buf;
+			}
+		}
+		public LabelInfoList? labelinfolist { get; }
+		public MediumList? mediumlist { get; }
+		public RelationList? relationlist { get; }
+		public MediumList media_matching_discid(string discid);
+	}
+
+	[Compact]
+	[CCode (free_function = "mb4_releasegroup_delete", lower_case_cprefix="mb4_releasegroup_")]
+	public class ReleaseGroup: Entity {
+		public ReleaseGroup clone();
+		[CCode (cname = "mb4_releasegroup_get_id")]
+		public int get_id_array(char[]? str);
+		public string id {
+			[CCode (cname = "mb4_releasegroup_get_id_wrapper")]
+			owned get {
+				int size = get_id_array(null);
+				char[] buf = new char[size];
+				get_id_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_releasegroup_get_type")]
+		public int get_type_array(char[]? str);
+		public string type {
+			[CCode (cname = "mb4_releasegroup_get_type_wrapper")]
+			owned get {
+				int size = get_type_array(null);
+				char[] buf = new char[size];
+				get_type_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_releasegroup_get_title")]
+		public int get_title_array(char[]? str);
+		public string title {
+			[CCode (cname = "mb4_releasegroup_get_title_wrapper")]
+			owned get {
+				int size = get_title_array(null);
+				char[] buf = new char[size];
+				get_title_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_releasegroup_get_disambiguation")]
+		public int get_disambiguation_array(char[]? str);
+		public string disambiguation {
+			[CCode (cname = "mb4_releasegroup_get_disambiguation_wrapper")]
+			owned get {
+				int size = get_disambiguation_array(null);
+				char[] buf = new char[size];
+				get_disambiguation_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_releasegroup_get_firstreleasedate")]
+		public int get_firstreleasedate_array(char[]? str);
+		public string firstreleasedate {
+			[CCode (cname = "mb4_releasegroup_get_firstreleasedate_wrapper")]
+			owned get {
+				int size = get_firstreleasedate_array(null);
+				char[] buf = new char[size];
+				get_firstreleasedate_array(buf);
+				return (string) buf;
+			}
+		}
+		public ArtistCredit? artistcredit { get; }
+		public ReleaseList? releaselist { get; }
+		public RelationList? relationlist { get; }
+		public TagList? taglist { get; }
+		public UserTagList? usertaglist { get; }
+		public Rating? rating { get; }
+		public UserRating? userrating { get; }
+	}
+
+	[Compact]
+	[CCode (free_function = "mb4_tag_delete")]
+	public class Tag: Entity {
+		public Tag clone();
+		public int count { get; }
+		[CCode (cname = "mb4_tag_get_name")]
+		public int get_name_array(char[]? str);
+		public string name {
+			[CCode (cname = "mb4_tag_get_name_wrapper")]
+			owned get {
+				int size = get_name_array(null);
+				char[] buf = new char[size];
+				get_name_array(buf);
+				return (string) buf;
+			}
+		}
+	}
+
+	[Compact]
+	[CCode (free_function = "mb4_textrepresentation_delete", lower_case_cprefix="mb4_textrepresentation_")]
+	public class TextRepresentation: Entity {
+		public TextRepresentation clone();
+		[CCode (cname = "mb4_textrepresentation_get_language")]
+		public int get_language_array(char[]? str);
+		public string language {
+			[CCode (cname = "mb4_textrepresentation_get_language_wrapper")]
+			owned get {
+				int size = get_language_array(null);
+				char[] buf = new char[size];
+				get_language_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_textrepresentation_get_script")]
+		public int get_script_array(char[]? str);
+		public string script {
+			[CCode (cname = "mb4_textrepresentation_get_script_wrapper")]
+			owned get {
+				int size = get_script_array(null);
+				char[] buf = new char[size];
+				get_script_array(buf);
+				return (string) buf;
+			}
+		}
+	}
+
+	[Compact]
+	[CCode (free_function = "mb4_track_delete")]
+	public class Track: Entity {
+		public Track clone();
+		public int position { get; }
+		[CCode (cname = "mb4_track_get_title")]
+		public int get_title_array(char[]? str);
+		public string title {
+			[CCode (cname = "mb4_track_get_title_wrapper")]
+			owned get {
+				int size = get_title_array(null);
+				char[] buf = new char[size];
+				get_title_array(buf);
+				return (string) buf;
+			}
+		}
+		public Recording? recording { get; }
+		public int length { get; }
+		public ArtistCredit? artistcredit { get; }
+	}
+
+	[Compact]
+	[CCode (free_function = "mb4_userrating_delete", lower_case_cprefix="mb4_userrating_")]
+	public class UserRating: Entity {
+		[CCode (cname = "mb4_userrating_clone")]
+		public UserRating.copy(UserRating userrating);
+		public int userrating { get; }
+	}
+
+	[Compact]
+	[CCode (free_function = "mb4_usertag_delete", lower_case_cprefix="mb4_usertag_")]
+	public class UserTag: Entity {
+		[CCode (cname = "mb4_usertag_clone")]
+		public UserTag.copy(UserTag usertag);
+		[CCode (cname = "mb4_usertag_get_name")]
+		public int get_name_array(char[]? str);
+		public string name {
+			[CCode (cname = "mb4_usertag_get_name_wrapper")]
+			owned get {
+				int size = get_name_array(null);
+				char[] buf = new char[size];
+				get_name_array(buf);
+				return (string) buf;
+			}
+		}
+	}
+
+	[Compact]
+	[CCode (free_function = "mb4_work_delete")]
+	public class Work: Entity {
+		[CCode (cname = "mb4_work_clone")]
+		public Work.copy(Work work);
+		[CCode (cname = "mb4_work_get_id")]
+		public int get_id_array(char[]? str);
+		public string id {
+			[CCode (cname = "mb4_work_get_id_wrapper")]
+			owned get {
+				int size = get_id_array(null);
+				char[] buf = new char[size];
+				get_id_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_work_get_type")]
+		public int get_type_array(char[]? str);
+		public string type {
+			[CCode (cname = "mb4_work_get_type_wrapper")]
+			owned get {
+				int size = get_type_array(null);
+				char[] buf = new char[size];
+				get_type_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_work_get_title")]
+		public int get_title_array(char[]? str);
+		public string title {
+			[CCode (cname = "mb4_work_get_title_wrapper")]
+			owned get {
+				int size = get_title_array(null);
+				char[] buf = new char[size];
+				get_title_array(buf);
+				return (string) buf;
+			}
+		}
+		public ArtistCredit? artistcredit { get; }
+		[CCode (cname = "mb4_work_get_iswc")]
+		public int get_iswc_array(char[]? str);
+		public string iswc {
+			[CCode (cname = "mb4_work_get_iswc_wrapper")]
+			owned get {
+				int size = get_iswc_array(null);
+				char[] buf = new char[size];
+				get_iswc_array(buf);
+				return (string) buf;
+			}
+		}
+		[CCode (cname = "mb4_work_get_disambiguation")]
+		public int get_disambiguation_array(char[]? str);
+		public string disambiguation {
+			[CCode (cname = "mb4_work_get_disambiguation_wrapper")]
+			owned get {
+				int size = get_disambiguation_array(null);
+				char[] buf = new char[size];
+				get_disambiguation_array(buf);
+				return (string) buf;
+			}
+		}
+		public AliasList? aliaslist { get; }
+		public RelationList? relationlist { get; }
+		public TagList? taglist { get; }
+		public UserTagList? usertaglist { get; }
+		public Rating? rating { get; }
+		public UserRating? userrating { get; }
+	}
+
 	[Compact]
 	[CCode (free_function = "mb4_alias_list_delete")]
 	public class AliasList: Entity {
-	}
-	
-	[Compact]
-	[CCode (free_function = "mb4_annotation_list_delete")]
-	public class AnnotationList {
-		public AnnotationList clone();
+		public int size {
+			[CCode (cname = "mb4_alias_list_size")]
+			get;
+		}
+		[CCode (cname = "mb4_alias_list_item")]
+		public unowned Alias get(int item);
 		public int count { get; }
 		public int offset { get; }
-		[CCode (cname = "mb4_annotation_list_item")]
-		public unowned Annotation get(int item);
+		[CCode (cname = "mb4_alias_list_clone")]
+		public AliasList.copy(AliasList alias_list);
+	}
+
+	[Compact]
+	[CCode (free_function = "mb4_annotation_list_delete")]
+	public class AnnotationList: Entity {
 		public int size {
 			[CCode (cname = "mb4_annotation_list_size")]
 			get;
 		}
+		[CCode (cname = "mb4_annotation_list_item")]
+		public unowned Annotation get(int item);
+		public int count { get; }
+		public int offset { get; }
+		[CCode (cname = "mb4_annotation_list_clone")]
+		public AnnotationList.copy(AnnotationList annotation_list);
+	}
+
+	[Compact]
+	[CCode (free_function = "mb4_artist_list_delete")]
+	public class ArtistList: Entity {
+		public int size {
+			[CCode (cname = "mb4_artist_list_size")]
+			get;
+		}
+		[CCode (cname = "mb4_artist_list_item")]
+		public unowned Artist get(int item);
+		public int count { get; }
+		public int offset { get; }
+		[CCode (cname = "mb4_artist_list_clone")]
+		public ArtistList.copy(ArtistList artist_list);
+	}
+
+	[Compact]
+	[CCode (free_function = "mb4_attribute_list_delete")]
+	public class AttributeList: Entity {
+		public int size {
+			[CCode (cname = "mb4_attribute_list_size")]
+			get;
+		}
+		[CCode (cname = "mb4_attribute_list_item")]
+		public unowned Attribute get(int item);
+		public int count { get; }
+		public int offset { get; }
+		[CCode (cname = "mb4_attribute_list_clone")]
+		public AttributeList.copy(AttributeList attribute_list);
+	}
+
+
+
+
+
+
+
+
+
+
+
+	[Compact]
+	[CCode (free_function = "mb4_release_list_delete")]
+	public class ReleaseList: Entity {
 	}
 	
 	[Compact]
@@ -785,23 +1513,6 @@ namespace Mb4 {
 	[Compact]
 	public class UserTagList {}
 	[Compact]
-	public class Rating {}
-	[Compact]
-	public class UserRating {}
-	[Compact]
-	[CCode (free_function = "mb4_artist_list_delete")]
-	public class ArtistList {
-		public ArtistList clone();
-		public int count { get; }
-		public int offset { get; }
-		[CCode (cname = "mb4_annotation_list_item")]
-		public unowned Artist get(int item);
-		public int size {
-			[CCode (cname = "mb4_artist_list_size")]
-			get;
-		}
-	}
-	[Compact]
 	public class NameCreditList {}
 	[Compact]
 	public class NonMBTrackList {}
@@ -809,16 +1520,6 @@ namespace Mb4 {
 	public class DiscList {}
 	[Compact]
 	public class TrackList {}
-	[Compact]
-	public class Release {}
-	[Compact]
-	public class ReleaseGroup {}
-	[Compact]
-	public class Recording {}
-	[Compact]
-	public class Work {}
-	[Compact]
-	public class PUID {}
 	[Compact]
 	public class LabelInfoList {}
 	[Compact]
@@ -829,4 +1530,8 @@ namespace Mb4 {
 	public class FreeDBDiscList {}
 	[Compact]
 	public class CollectionList {}
+	[Compact]
+	public class PUIDList {}
+	[Compact]
+	public class MediumList {}
 }
