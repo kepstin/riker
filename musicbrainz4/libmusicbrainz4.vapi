@@ -534,7 +534,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_attribute_get_text_wrapper")]
 			owned get {
 				int size = get_text_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_text_array(buf);
 				return (string) buf;
 			}
@@ -551,7 +551,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_cdstub_get_id_wrapper")]
 			owned get {
 				int size = get_id_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_id_array(buf);
 				return (string) buf;
 			}
@@ -562,7 +562,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_cdstub_get_title_wrapper")]
 			owned get {
 				int size = get_title_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_title_array(buf);
 				return (string) buf;
 			}
@@ -573,7 +573,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_cdstub_get_artist_wrapper")]
 			owned get {
 				int size = get_artist_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_artist_array(buf);
 				return (string) buf;
 			}
@@ -584,7 +584,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_cdstub_get_barcode_wrapper")]
 			owned get {
 				int size = get_barcode_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_barcode_array(buf);
 				return (string) buf;
 			}
@@ -595,7 +595,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_cdstub_get_comment_wrapper")]
 			owned get {
 				int size = get_comment_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_comment_array(buf);
 				return (string) buf;
 			}
@@ -613,7 +613,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_collection_get_id_wrapper")]
 			owned get {
 				int size = get_id_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_id_array(buf);
 				return (string) buf;
 			}
@@ -624,7 +624,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_collection_get_name_wrapper")]
 			owned get {
 				int size = get_name_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_name_array(buf);
 				return (string) buf;
 			}
@@ -635,7 +635,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_collection_get_editor_wrapper")]
 			owned get {
 				int size = get_editor_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_editor_array(buf);
 				return (string) buf;
 			}
@@ -653,7 +653,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_disc_get_id_wrapper")]
 			owned get {
 				int size = get_id_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_id_array(buf);
 				return (string) buf;
 			}
@@ -672,7 +672,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_freedbdisc_get_id_wrapper")]
 			owned get {
 				int size = get_id_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_id_array(buf);
 				return (string) buf;
 			}
@@ -683,7 +683,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_freedbdisc_get_title_wrapper")]
 			owned get {
 				int size = get_title_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_title_array(buf);
 				return (string) buf;
 			}
@@ -694,7 +694,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_freedbdisc_get_artist_wrapper")]
 			owned get {
 				int size = get_artist_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_artist_array(buf);
 				return (string) buf;
 			}
@@ -705,7 +705,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_freedbdisc_get_category_wrapper")]
 			owned get {
 				int size = get_category_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_category_array(buf);
 				return (string) buf;
 			}
@@ -716,7 +716,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_freedbdisc_get_year_wrapper")]
 			owned get {
 				int size = get_year_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_year_array(buf);
 				return (string) buf;
 			}
@@ -734,7 +734,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_isrc_get_id_wrapper")]
 			owned get {
 				int size = get_id_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_id_array(buf);
 				return (string) buf;
 			}
@@ -752,7 +752,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_label_get_id_wrapper")]
 			owned get {
 				int size = get_id_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_id_array(buf);
 				return (string) buf;
 			}
@@ -763,7 +763,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_label_get_type_wrapper")]
 			owned get {
 				int size = get_type_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_type_array(buf);
 				return (string) buf;
 			}
@@ -774,7 +774,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_label_get_name_wrapper")]
 			owned get {
 				int size = get_name_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_name_array(buf);
 				return (string) buf;
 			}
@@ -785,7 +785,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_label_get_sortname_wrapper")]
 			owned get {
 				int size = get_sortname_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_sortname_array(buf);
 				return (string) buf;
 			}
@@ -797,7 +797,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_label_get_disambiguation_wrapper")]
 			owned get {
 				int size = get_disambiguation_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_disambiguation_array(buf);
 				return (string) buf;
 			}
@@ -808,7 +808,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_label_get_country_wrapper")]
 			owned get {
 				int size = get_country_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_country_array(buf);
 				return (string) buf;
 			}
@@ -833,7 +833,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_labelinfo_get_catalognumber_wrapper")]
 			owned get {
 				int size = get_catalognumber_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_catalognumber_array(buf);
 				return (string) buf;
 			}
@@ -851,7 +851,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_lifespan_get_begin_wrapper")]
 			owned get {
 				int size = get_begin_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_begin_array(buf);
 				return (string) buf;
 			}
@@ -862,7 +862,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_lifespan_get_end_wrapper")]
 			owned get {
 				int size = get_end_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_end_array(buf);
 				return (string) buf;
 			}
@@ -879,7 +879,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_medium_get_title_wrapper")]
 			owned get {
 				int size = get_title_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_title_array(buf);
 				return (string) buf;
 			}
@@ -891,7 +891,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_medium_get_format_wrapper")]
 			owned get {
 				int size = get_format_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_format_array(buf);
 				return (string) buf;
 			}
@@ -911,7 +911,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_message_get_text_wrapper")]
 			owned get {
 				int size = get_text_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_text_array(buf);
 				return (string) buf;
 			}
@@ -928,7 +928,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_metadata_get_xmlns_wrapper")]
 			owned get {
 				int size = get_xmlns_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_xmlns_array(buf);
 				return (string) buf;
 			}
@@ -939,7 +939,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_metadata_get_xmlnsext_wrapper")]
 			owned get {
 				int size = get_xmlnsext_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_xmlnsext_array(buf);
 				return (string) buf;
 			}
@@ -950,7 +950,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_metadata_get_generator_wrapper")]
 			owned get {
 				int size = get_generator_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_generator_array(buf);
 				return (string) buf;
 			}
@@ -961,7 +961,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_metadata_get_created_wrapper")]
 			owned get {
 				int size = get_created_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_created_array(buf);
 				return (string) buf;
 			}
@@ -1006,7 +1006,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_namecredit_get_joinphrase_wrapper")]
 			owned get {
 				int size = get_joinphrase_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_joinphrase_array(buf);
 				return (string) buf;
 			}
@@ -1017,7 +1017,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_namecredit_get_name_wrapper")]
 			owned get {
 				int size = get_name_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_name_array(buf);
 				return (string) buf;
 			}
@@ -1035,7 +1035,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_nonmbtrack_get_title_wrapper")]
 			owned get {
 				int size = get_title_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_title_array(buf);
 				return (string) buf;
 			}
@@ -1046,7 +1046,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_nonmbtrack_get_artist_wrapper")]
 			owned get {
 				int size = get_artist_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_artist_array(buf);
 				return (string) buf;
 			}
@@ -1064,7 +1064,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_puid_get_id_wrapper")]
 			owned get {
 				int size = get_id_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_id_array(buf);
 				return (string) buf;
 			}
@@ -1083,7 +1083,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_query_get_lasterrormessage_wrapper")]
 			owned get {
 				int size = get_lasterrormessage_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_lasterrormessage_array(buf);
 				return (string) buf;
 			}
@@ -1183,7 +1183,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_recording_get_id_wrapper")]
 			owned get {
 				int size = get_id_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_id_array(buf);
 				return (string) buf;
 			}
@@ -1194,7 +1194,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_recording_get_title_wrapper")]
 			owned get {
 				int size = get_title_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_title_array(buf);
 				return (string) buf;
 			}
@@ -1206,7 +1206,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_recording_get_disambiguation_wrapper")]
 			owned get {
 				int size = get_disambiguation_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_disambiguation_array(buf);
 				return (string) buf;
 			}
@@ -1232,7 +1232,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_relation_get_type_wrapper")]
 			owned get {
 				int size = get_type_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_type_array(buf);
 				return (string) buf;
 			}
@@ -1243,7 +1243,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_relation_get_target_wrapper")]
 			owned get {
 				int size = get_target_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_target_array(buf);
 				return (string) buf;
 			}
@@ -1254,7 +1254,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_relation_get_direction_wrapper")]
 			owned get {
 				int size = get_direction_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_direction_array(buf);
 				return (string) buf;
 			}
@@ -1266,7 +1266,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_relation_get_begin_wrapper")]
 			owned get {
 				int size = get_begin_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_begin_array(buf);
 				return (string) buf;
 			}
@@ -1277,7 +1277,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_relation_get_end_wrapper")]
 			owned get {
 				int size = get_end_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_end_array(buf);
 				return (string) buf;
 			}
@@ -1300,7 +1300,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_release_get_id_wrapper")]
 			owned get {
 				int size = get_id_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_id_array(buf);
 				return (string) buf;
 			}
@@ -1311,7 +1311,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_release_get_title_wrapper")]
 			owned get {
 				int size = get_title_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_title_array(buf);
 				return (string) buf;
 			}
@@ -1322,7 +1322,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_release_get_status_wrapper")]
 			owned get {
 				int size = get_status_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_status_array(buf);
 				return (string) buf;
 			}
@@ -1333,7 +1333,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_release_get_quality_wrapper")]
 			owned get {
 				int size = get_quality_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_quality_array(buf);
 				return (string) buf;
 			}
@@ -1344,7 +1344,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_release_get_disambiguation_wrapper")]
 			owned get {
 				int size = get_disambiguation_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_disambiguation_array(buf);
 				return (string) buf;
 			}
@@ -1355,7 +1355,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_release_get_packaging_wrapper")]
 			owned get {
 				int size = get_packaging_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_packaging_array(buf);
 				return (string) buf;
 			}
@@ -1369,7 +1369,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_release_get_date_wrapper")]
 			owned get {
 				int size = get_date_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_date_array(buf);
 				return (string) buf;
 			}
@@ -1380,7 +1380,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_release_get_country_wrapper")]
 			owned get {
 				int size = get_country_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_country_array(buf);
 				return (string) buf;
 			}
@@ -1391,7 +1391,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_release_get_barcode_wrapper")]
 			owned get {
 				int size = get_barcode_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_barcode_array(buf);
 				return (string) buf;
 			}
@@ -1402,7 +1402,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_release_get_asin_wrapper")]
 			owned get {
 				int size = get_asin_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_asin_array(buf);
 				return (string) buf;
 			}
@@ -1423,7 +1423,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_releasegroup_get_id_wrapper")]
 			owned get {
 				int size = get_id_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_id_array(buf);
 				return (string) buf;
 			}
@@ -1434,7 +1434,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_releasegroup_get_type_wrapper")]
 			owned get {
 				int size = get_type_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_type_array(buf);
 				return (string) buf;
 			}
@@ -1445,7 +1445,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_releasegroup_get_title_wrapper")]
 			owned get {
 				int size = get_title_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_title_array(buf);
 				return (string) buf;
 			}
@@ -1456,7 +1456,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_releasegroup_get_disambiguation_wrapper")]
 			owned get {
 				int size = get_disambiguation_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_disambiguation_array(buf);
 				return (string) buf;
 			}
@@ -1467,7 +1467,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_releasegroup_get_firstreleasedate_wrapper")]
 			owned get {
 				int size = get_firstreleasedate_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_firstreleasedate_array(buf);
 				return (string) buf;
 			}
@@ -1492,7 +1492,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_tag_get_name_wrapper")]
 			owned get {
 				int size = get_name_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_name_array(buf);
 				return (string) buf;
 			}
@@ -1509,7 +1509,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_textrepresentation_get_language_wrapper")]
 			owned get {
 				int size = get_language_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_language_array(buf);
 				return (string) buf;
 			}
@@ -1520,7 +1520,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_textrepresentation_get_script_wrapper")]
 			owned get {
 				int size = get_script_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_script_array(buf);
 				return (string) buf;
 			}
@@ -1538,7 +1538,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_track_get_title_wrapper")]
 			owned get {
 				int size = get_title_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_title_array(buf);
 				return (string) buf;
 			}
@@ -1567,7 +1567,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_usertag_get_name_wrapper")]
 			owned get {
 				int size = get_name_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_name_array(buf);
 				return (string) buf;
 			}
@@ -1585,7 +1585,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_work_get_id_wrapper")]
 			owned get {
 				int size = get_id_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_id_array(buf);
 				return (string) buf;
 			}
@@ -1596,7 +1596,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_work_get_type_wrapper")]
 			owned get {
 				int size = get_type_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_type_array(buf);
 				return (string) buf;
 			}
@@ -1607,7 +1607,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_work_get_title_wrapper")]
 			owned get {
 				int size = get_title_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_title_array(buf);
 				return (string) buf;
 			}
@@ -1619,7 +1619,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_work_get_iswc_wrapper")]
 			owned get {
 				int size = get_iswc_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_iswc_array(buf);
 				return (string) buf;
 			}
@@ -1630,7 +1630,7 @@ namespace Mb4 {
 			[CCode (cname = "mb4_work_get_disambiguation_wrapper")]
 			owned get {
 				int size = get_disambiguation_array(null);
-				char[] buf = new char[size];
+				char[] buf = new char[size+1];
 				get_disambiguation_array(buf);
 				return (string) buf;
 			}
