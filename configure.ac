@@ -3,7 +3,7 @@ AC_INIT([riker],[0.1],[calvin.walton@kepstin.ca])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 
-AM_INIT_AUTOMAKE([foreign subdir-objects])
+AM_INIT_AUTOMAKE([foreign subdir-objects dist-xz])
 
 LT_INIT([disable-static])
 
