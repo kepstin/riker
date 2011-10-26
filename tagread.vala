@@ -95,6 +95,16 @@ class TagRead {
 		
 		pipe.set_state(Gst.State.NULL);
 		
+		print("Performing a musicbrainz query...\n");
+		
+		Mb4.Query mb4_query = new Mb4.Query("Riker/0.1");
+		Mb4.Metadata m = mb4_query.query("release", release_mbid, null, inc: "media recordings");
+		
+		unowned Mb4.Release r = m.release;
+		if (r != null) {
+			print("Release title: %s\n", r.title);
+		}
+		
 		return 0;
 	}
 }
