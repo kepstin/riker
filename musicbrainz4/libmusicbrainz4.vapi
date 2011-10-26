@@ -1088,7 +1088,7 @@ namespace Mb4 {
 				return (string) buf;
 			}
 		}
-		public Query(string user_agent, string? server, int port);
+		public Query(string user_agent, string? server = null, int port = 0);
 		public string username { set; }
 		public string password { set; }
 		public string proxyhost { set; }
