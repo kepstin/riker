@@ -517,19 +517,53 @@ namespace Mb4 {
 		public UserRating? userrating { get; }
 	}
 
+	/**
+	 * A representation of one or more artists, as credited.
+	 *
+	 * See [http://musicbrainz.org/doc/Artist_Credit|Artist Credit]
+	 */
 	[Compact]
 	[CCode (free_function = "mb4_artistcredit_delete", lower_case_cprefix="mb4_artistcredit_")]
 	public class ArtistCredit: Entity {
-		public ArtistCredit clone();
+		/**
+		 * Create a copy of an Artist Credit object.
+		 * @param artistcredit The Artist Credit to copy.
+		 */
+		[CCode (cname = "mb4_artistcredit_clone")]
+		public ArtistCredit.copy(ArtistCredit artistcredit);
+		
+		/**
+		 * The list of per-artist name credits and join phrases.
+		 */
 		public NameCreditList namecreditlist { get; }
 	}
 
+	/**
+	 * An attribute on an advanced relationship.
+	 *
+	 * See [http://musicbrainz.org/doc/Relationship_Attribute|Relationship Attribute]
+	 */
 	[Compact]
 	[CCode (free_function = "mb4_attribute_delete")]
 	public class Attribute: Entity {
-		public Attribute clone();
+		/**
+		 * Create a copy of the Attribute object
+		 * @param attribute The Attribute to copy.
+		 */
+		[CCode (cname = "mb4_attribute_clone")]
+		public Attribute.copy(Attribute attribute);
+		
+		/**
+		 * Get the value of the attribute as text.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_attribute_get_text")]
 		public int get_text_array(char[]? str);
+		
+		/**
+		 * The value of the attribute as text.
+		 */
 		public string text {
 			[CCode (cname = "mb4_attribute_get_text_wrapper")]
 			owned get {
@@ -541,12 +575,32 @@ namespace Mb4 {
 		}
 	}
 
+	/**
+	 * An anonymously-submitted incomplete release.
+	 *
+	 * See [http://musicbrainz.org/doc/CD_Stub|CD Stub]
+	 */
 	[Compact]
 	[CCode (free_function = "mb4_cdstub_delete", lower_case_cprefix="mb4_cdstub_")]
 	public class CDStub: Entity {
-		public CDStub clone();
+		/**
+		 * Create a copy of a CD Stub object.
+		 * @param cdstub The CD Stub to copy.
+		 */
+		[CCode (cname = "mb4_cdstub_clone")]
+		public CDStub.copy(CDStub cdstub);
+		
+		/**
+		 * Get the MBID of the CD Stub.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_cdstub_get_id")]
 		public int get_id_array(char[]? str);
+		
+		/**
+		 * The MBID of the CD Stub.
+		 */
 		public string id {
 			[CCode (cname = "mb4_cdstub_get_id_wrapper")]
 			owned get {
@@ -556,8 +610,18 @@ namespace Mb4 {
 				return (string) buf;
 			}
 		}
+		
+		/**
+		 * Get the title of the CD Stub.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_cdstub_get_title")]
 		public int get_title_array(char[]? str);
+		
+		/**
+		 * The title of the CD Stub.
+		 */
 		public string title {
 			[CCode (cname = "mb4_cdstub_get_title_wrapper")]
 			owned get {
@@ -567,8 +631,18 @@ namespace Mb4 {
 				return (string) buf;
 			}
 		}
+		
+		/**
+		 * Get the artist of the CD Stub.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_cdstub_get_artist")]
 		public int get_artist_array(char[]? str);
+		
+		/**
+		 * The artist of the CD Stub.
+		 */
 		public string artist {
 			[CCode (cname = "mb4_cdstub_get_artist_wrapper")]
 			owned get {
@@ -578,8 +652,18 @@ namespace Mb4 {
 				return (string) buf;
 			}
 		}
+		
+		/**
+		 * Get the barcode of the CD Stub.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_cdstub_get_barcode")]
 		public int get_barcode_array(char[]? str);
+		
+		/**
+		 * The barcode of the CD Stub.
+		 */
 		public string barcode {
 			[CCode (cname = "mb4_cdstub_get_barcode_wrapper")]
 			owned get {
@@ -589,8 +673,18 @@ namespace Mb4 {
 				return (string) buf;
 			}
 		}
+		
+		/**
+		 * Get the comment of the CD Stub.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_cdstub_get_comment")]
 		public int get_comment_array(char[]? str);
+		
+		/**
+		 * The comment of the CD Stub.
+		 */
 		public string comment {
 			[CCode (cname = "mb4_cdstub_get_comment_wrapper")]
 			owned get {
@@ -600,15 +694,38 @@ namespace Mb4 {
 				return (string) buf;
 			}
 		}
+		
+		/**
+		 * The list of tracks in the CD Stub.
+		 */
 		public NonMBTrackList nonmbtracklist { get; }
 	}
 
+	/**
+	 * A list of releases curated by a user.
+	 *
+	 * See [http://musicbrainz.org/doc/Collections|Collections]
+	 */
 	[Compact]
 	[CCode (free_function = "mb4_collection_delete")]
 	public class Collection: Entity {
-		public Collection clone();
+		/**
+		 * Create a copy of a Collection object.
+		 * @param collection The Collection object to copy.
+		 */
+		public Collection.copy(Collection collection);
+		
+		/**
+		 * Get the MBID of the Collection.
+		 * @param str Array to fill with returned string, or null to find length only.
+		 * @return The number of characters in the string to copy (not including terminating null).
+		 */
 		[CCode (cname = "mb4_collection_get_id")]
 		public int get_id_array(char[]? str);
+		
+		/**
+		 * The MBID of the Collection.
+		 */
 		public string id {
 			[CCode (cname = "mb4_collection_get_id_wrapper")]
 			owned get {
