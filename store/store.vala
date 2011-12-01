@@ -15,6 +15,10 @@
 namespace Riker {
 
 public class Store: Object {
+	
+	private const uint SCHEMA_VERSION = 0;
+	private const uint SUPPORTED_SCHEMA_VERSION = 1;	
+	
 	public string path {
 		private get;
 		construct;
@@ -30,12 +34,22 @@ public class Store: Object {
 		Object(path: path);
 	}
 	
-	construct {
+	public void open() {
+		if (SCHEMA_VERSION == 0) {
+			print(
+"This version of Riker uses an unstable database schema. If you update Riker\n" +
+"to a new version, you must delete the database file and either restore a\n" +
+"backup from a stable version or rescan your music collection.\n");
+		}
+		
 		DirUtils.create_with_parents(Path.get_dirname(path), 0700);
 		var rc = Sqlite.Database.open(path, out db);
 		if (rc != Sqlite.OK) {
 			stderr.printf ("Can't open database: %d, %s\n", rc, db.errmsg ());
+			return; // TODO error handling...
 		}
+		
+		// Query the database for its schema version
 	}
 	
 	public void add_file(File file) {

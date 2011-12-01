@@ -1,5 +1,10 @@
 PRAGMA foreign_keys = ON;
 
+CREATE TABLE riker (
+	schema_version	INTEGER NOT NULL
+);
+INSERT INTO riker (schema_version) VALUES (0);
+
 CREATE TABLE artist_type (
 	id		INTEGER PRIMARY KEY NOT NULL,
 	name		CHARACTER UNIQUE NOT NULL

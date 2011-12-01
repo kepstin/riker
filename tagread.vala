@@ -20,6 +20,7 @@ class TagRead {
 		Gst.init(ref args);
 		
 		var store = new Store();
+		store.open();
 		
 		if (args.length < 2) {
 			stderr.printf("Usage: %s file:///path/to/file\n", args[0]);
