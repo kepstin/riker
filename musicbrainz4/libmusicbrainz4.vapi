@@ -123,14 +123,14 @@ namespace Mb4 {
 	/**
 	 * A variant name primarily used as a search help.
 	 *
-	 * See [http://musicbrainz.org/doc/Aliases|Aliases]
+	 * See [[http://musicbrainz.org/doc/Aliases|Aliases]]
 	 */
 	[Compact]
 	[CCode (free_function = "mb4_alias_delete")]
 	public class Alias: Entity {
 		/**
 		 * Create a copy of an Alias object.
-		 * @alias Object to copy.
+		 * @param alias Object to copy.
 		 */
 		[CCode (cname = "mb4_alias_clone")]
 		public Alias.copy(Alias alias);
@@ -182,14 +182,14 @@ namespace Mb4 {
 	 * Text fields, functioning like a miniature wiki, that can be added to
 	 * various MusicBrainz entities.
 	 *
-	 * See [http://musicbrainz.org/doc/Annotation|Annotation]
+	 * See [[http://musicbrainz.org/doc/Annotation|Annotation]]
 	 */
 	[Compact]
 	[CCode (free_function = "mb4_annotation_delete")]
 	public class Annotation: Entity {
 		/**
 		 * Create a copy of an Annotation object.
-		 * @annotation Object to copy.
+		 * @param annotation Object to copy.
 		 */
 		[CCode (cname = "mb4_annotation_clone")]
 		public Annotation.copy(Annotation annotation);
@@ -283,14 +283,14 @@ namespace Mb4 {
 	 * A person, group of people, or other contributor or credited entity
 	 * on a musical work.
 	 *
-	 * See [http://musicbrainz.org/doc/Artist|Artist]
+	 * See [[http://musicbrainz.org/doc/Artist|Artist]]
 	 */
 	[Compact]
 	[CCode (free_function = "mb4_artist_delete")]
 	public class Artist: Entity {
 		/**
 		 * Create a copy of an Artist object.
-		 * @artist Object to copy.
+		 * @param artist Object to copy.
 		 */
 		[CCode (cname = "mb4_artist_clone")]
 		public Artist.copy(Artist artist);
@@ -306,7 +306,7 @@ namespace Mb4 {
 		/**
 		 * The MBID of the Artist.
 		 *
-		 * See [http://musicbrainz.org/doc/MusicBrainz_Identifier|MusicBrainz Identifier]
+		 * See [[http://musicbrainz.org/doc/MusicBrainz_Identifier|MusicBrainz Identifier]]
 		 */
 		public string id {
 			[CCode (cname = "mb4_artist_get_id_wrapper")]
@@ -329,7 +329,7 @@ namespace Mb4 {
 		/**
 		 * The type of the artist.
 		 *
-		 * See [http://musicbrainz.org/doc/Artist_Type|Artist Type]
+		 * See [[http://musicbrainz.org/doc/Artist_Type|Artist Type]]
 		 */
 		public string type {
 			[CCode (cname = "mb4_artist_get_type_wrapper")]
@@ -352,7 +352,7 @@ namespace Mb4 {
 		/**
 		 * The Artist's name.
 		 *
-		 * See [http://musicbrainz.org/doc/Artist_Name|Artist Name]
+		 * See [[http://musicbrainz.org/doc/Artist_Name|Artist Name]]
 		 */
 		public string name {
 			[CCode (cname = "mb4_artist_get_name_wrapper")]
@@ -375,7 +375,7 @@ namespace Mb4 {
 		/**
 		 * The Artist's sort name.
 		 *
-		 * See [http://musicbrainz.org/doc/Sort_Name|Sort Name]
+		 * See [[http://musicbrainz.org/doc/Sort_Name|Sort Name]]
 		 */
 		public string sortname {
 			[CCode (cname = "mb4_artist_get_sortname_wrapper")]
@@ -419,7 +419,7 @@ namespace Mb4 {
 		/**
 		 * The Artist's country.
 		 *
-		 * This will be one of the ISO codes from [http://musicbrainz.org/doc/Release_Country|Release Country]
+		 * This will be one of the ISO codes from [[http://musicbrainz.org/doc/Release_Country|Release Country]]
 		 */
 		public string country {
 			[CCode (cname = "mb4_artist_get_country_wrapper")]
@@ -442,7 +442,7 @@ namespace Mb4 {
 		/**
 		 * The disambiguation comment for the artist.
 		 *
-		 * See [http://musicbrainz.org/doc/Disambiguation_Comment|Disambiguation Comment]
+		 * See [[http://musicbrainz.org/doc/Disambiguation_Comment|Disambiguation Comment]]
 		 */
 		public string disambiguation {
 			[CCode (cname = "mb4_artist_get_disambiguation_wrapper")]
@@ -520,7 +520,7 @@ namespace Mb4 {
 	/**
 	 * A representation of one or more artists, as credited.
 	 *
-	 * See [http://musicbrainz.org/doc/Artist_Credit|Artist Credit]
+	 * See [[http://musicbrainz.org/doc/Artist_Credit|Artist Credit]]
 	 */
 	[Compact]
 	[CCode (free_function = "mb4_artistcredit_delete", lower_case_cprefix="mb4_artistcredit_")]
@@ -541,7 +541,7 @@ namespace Mb4 {
 	/**
 	 * An attribute on an advanced relationship.
 	 *
-	 * See [http://musicbrainz.org/doc/Relationship_Attribute|Relationship Attribute]
+	 * See [[http://musicbrainz.org/doc/Relationship_Attribute|Relationship Attribute]]
 	 */
 	[Compact]
 	[CCode (free_function = "mb4_attribute_delete")]
@@ -578,7 +578,7 @@ namespace Mb4 {
 	/**
 	 * An anonymously-submitted incomplete release.
 	 *
-	 * See [http://musicbrainz.org/doc/CD_Stub|CD Stub]
+	 * See [[http://musicbrainz.org/doc/CD_Stub|CD Stub]]
 	 */
 	[Compact]
 	[CCode (free_function = "mb4_cdstub_delete", lower_case_cprefix="mb4_cdstub_")]
@@ -704,7 +704,7 @@ namespace Mb4 {
 	/**
 	 * A list of releases curated by a user.
 	 *
-	 * See [http://musicbrainz.org/doc/Collections|Collections]
+	 * See [[http://musicbrainz.org/doc/Collections|Collections]]
 	 */
 	[Compact]
 	[CCode (free_function = "mb4_collection_delete")]
