@@ -3,7 +3,7 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE riker (
 	schema_version	INTEGER NOT NULL
 );
-INSERT INTO riker (schema_version) VALUES (0);
+INSERT INTO riker (schema_version) VALUES (0); -- Unstable schema version
 
 CREATE TABLE artist_type (
 	id		INTEGER PRIMARY KEY NOT NULL,
@@ -15,6 +15,11 @@ CREATE TABLE country (
 	iso_code	CHARACTER UNIQUE NOT NULL,
 	name		CHARACTER NOT NULL
 );
+-- MusicBrainz-specific nonstandard country codes; others will be imported automatically.
+INSERT INTO country (iso_code, name) VALUES ('XC', 'Czechoslovakia (historical, 1918-1992)');
+INSERT INTO country (iso_code, name) VALUES ('XE', 'Europe');
+INSERT INTO country (iso_code, name) VALUES ('XG', 'East Germany (historical, 1949-1990)');
+INSERT INTO country (iso_code, name) VALUES ('XW', '[Worldwide]');
 
 CREATE TABLE gender (
 	id		INTEGER PRIMARY KEY NOT NULL,
@@ -129,6 +134,42 @@ CREATE TABLE medium_format (
 	name		CHARACTER NOT NULL,
 	parent		INTEGER REFERENCES medium_format (id)
 );
+-- Need to manually specify these to get the tree correct
+INSERT INTO medium_format (id, name) VALUES (1, 'CD');
+INSERT INTO medium_format (id, name) VALUES (2, 'DVD');
+INSERT INTO medium_format (id, name) VALUES (3, 'SACD');
+INSERT INTO medium_format (id, name) VALUES (4, 'DualDisc');
+INSERT INTO medium_format (id, name) VALUES (6, 'MiniDisc');
+INSERT INTO medium_format (id, name) VALUES (7, 'Vinyl');
+INSERT INTO medium_format (id, name) VALUES (8, 'Cassette');
+INSERT INTO medium_format (id, name) VALUES (12, 'Digital Media');
+INSERT INTO medium_format (id, name) VALUES (13, 'Other');
+INSERT INTO medium_format (id, name) VALUES (17, 'HD-DVD');
+INSERT INTO medium_format (id, name) VALUES (20, 'Blu-ray');
+INSERT INTO medium_format (id, name) VALUES (22, 'VCD');
+INSERT INTO medium_format (id, name) VALUES (28, 'UMD');
+INSERT INTO medium_format (id, name) VALUES (32, 'Videotape');
+INSERT INTO medium_format (id, name, parent) VALUES (5, 'LaserDisc', 13);
+INSERT INTO medium_format (id, name, parent) VALUES (9, 'Cartridge', 13);
+INSERT INTO medium_format (id, name, parent) VALUES (10, 'Reel-to-reel', 13);
+INSERT INTO medium_format (id, name, parent) VALUES (11, 'DAT', 13);
+INSERT INTO medium_format (id, name, parent) VALUES (14, 'Wax Cylinder', 13);
+INSERT INTO medium_format (id, name, parent) VALUES (15, 'Piano Roll', 13);
+INSERT INTO medium_format (id, name, parent) VALUES (16, 'DCC', 13);
+INSERT INTO medium_format (id, name, parent) VALUES (21, 'VHS', 32);
+INSERT INTO medium_format (id, name, parent) VALUES (23, 'SVCD', 22);
+INSERT INTO medium_format (id, name, parent) VALUES (24, 'Betamax', 32);
+INSERT INTO medium_format (id, name, parent) VALUES (25, 'HDCD', 1);
+INSERT INTO medium_format (id, name, parent) VALUES (29, '7" Vinyl', 7);
+INSERT INTO medium_format (id, name, parent) VALUES (30, '10" Vinyl', 7);
+INSERT INTO medium_format (id, name, parent) VALUES (31, '12" Vinyl', 7);
+INSERT INTO medium_format (id, name, parent) VALUES (26, 'USB Flash Drive', 12);
+INSERT INTO medium_format (id, name, parent) VALUES (27, 'slotMusic', 12);
+INSERT INTO medium_format (id, name, parent) VALUES (18, 'DVD-Audio', 2);
+INSERT INTO medium_format (id, name, parent) VALUES (19, 'DVD-Video', 2);
+INSERT INTO medium_format (id, name, parent) VALUES (33, 'CD-R', 1);
+INSERT INTO medium_format (id, name, parent) VALUES (34, '8cm CD', 1);
+
 
 CREATE TABLE medium (
 	id		INTEGER PRIMARY KEY NOT NULL,
