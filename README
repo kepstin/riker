@@ -11,11 +11,12 @@ is libmusicbrainz-4. Your distribution probably does /not/ have it packaged.
 So go to http://musicbrainz.org/doc/libmusicbrainz and install it.
 
 Next you'll need the Vala compiler, valac. Version 0.14 should do it, this
-should be in your distribution packages. Also sqlite 3, glib, gstreamer and
-their associated development packages, if your Linux distribution has a habit
-of inconveniencing people who like to actually /use/ their computers.
+should be in your distribution packages. Also sqlite 3, glib, and gstreamer.
+Don't forget their associated development packages, if your Linux distribution
+has a habit of inconveniencing people who like to actually /use/ their
+computers.
 
-Still with me? Now we're ready to go. CD into the riker source directory, and
+Still with me? Now we're ready to go. cd into the riker source directory, and
 run these commands:
 
 ./autogen.sh
