@@ -33,7 +33,12 @@ public class Store: Object {
 		construct;
 	}
 	
-	private Sqlite.Database db;
+	private Sqlite.Database _db;
+	public unowned Sqlite.Database db {
+		get {
+			return _db;
+		}
+	}
 	
 	public Store() {
 		Object(path: Path.build_filename(Environment.get_user_data_dir(), "riker", "store.db"));
@@ -45,10 +50,10 @@ public class Store: Object {
 	
 	public void open() throws StoreError {
 		if (SCHEMA_VERSION == 0) {
-			print(
+			stderr.printf(
 "This version of Riker uses an unstable database schema. If you update Riker\n" +
-"you must delete the database file and either restore a backup from a stable\n" +
-"or rescan your music collection.\n");
+"you must delete the database file and either restore a backup from an older\n" +
+"stable version or rescan your music collection.\n");
 		}
 		
 		stderr.printf("Database location: %s\n", path);
@@ -63,7 +68,7 @@ public class Store: Object {
 			DirUtils.create_with_parents(Path.get_dirname(path), 0700);
 		}
 		
-		var rc = Sqlite.Database.open(path, out db);
+		var rc = Sqlite.Database.open(path, out _db);
 		if (rc != Sqlite.OK) {
 			throw new StoreError.OPEN_FAILED("Could not open database: " + db.errmsg());
 		}
@@ -112,8 +117,48 @@ public class Store: Object {
 		stderr.printf("Database schema loaded.\n");
 	}
 	
-	public void add_file(File file) {
+	public Country get_country_by_id(int id) throws StoreError {
+		int rc;
+		Country country = null;
+
+		if (Country.select_by_id_stmt == null) {
+			rc = db.prepare_v2(Country.select_by_id, Country.select_by_id.length, out Country.select_by_id_stmt);
+			if (rc != Sqlite.OK) {
+				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
+			}
+		}
 		
+		Country.select_by_id_stmt.bind_int(1, id);
+		while ((rc = Country.select_by_id_stmt.step()) == Sqlite.ROW) {
+			country = new Country.from_row(Country.select_by_id_stmt);
+		}
+		Country.select_by_id_stmt.reset();
+		if (rc != Sqlite.DONE) {
+			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
+		}
+		return country;
+	}
+
+	public Country? get_country_by_iso_code(string iso_code) throws StoreError {
+		int rc;
+		Country country = null;
+
+		if (Country.select_by_id_stmt == null) {
+			rc = db.prepare_v2(Country.select_by_iso_code, Country.select_by_iso_code.length, out Country.select_by_iso_code_stmt);
+			if (rc != Sqlite.OK) {
+				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
+			}
+		}
+
+		Country.select_by_iso_code_stmt.bind_text(1, iso_code);
+		while ((rc = Country.select_by_iso_code_stmt.step()) == Sqlite.ROW) {
+			country = new Country.from_row(Country.select_by_iso_code_stmt);
+		}
+		Country.select_by_iso_code_stmt.reset();
+		if (rc != Sqlite.DONE) {
+			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
+		}
+		return country;
 	}
 }
 

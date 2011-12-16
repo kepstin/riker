@@ -20,8 +20,8 @@ class TagRead {
 		Gst.init(ref args);
 
 #if ENABLE_UNINSTALLED
-		stdout.printf("This is an UNINSTALLED build. Do not install it.\n");
-		stdout.printf("Using files from source directory: %s\n", Config.BUILD_SRCDIR);
+		stderr.printf("This is an UNINSTALLED build. Do not install it.\n");
+		stderr.printf("Using files from source directory: %s\n", Config.BUILD_SRCDIR);
 #endif
 
 		var store = new Store();
@@ -33,8 +33,18 @@ class TagRead {
 				stderr.printf("%s\n", e.message);
 				stderr.printf("To resolve this, try deleting the database file so it can be re-created.\n");
 				stderr.printf("Database path: %s\n", store.path);
+			} else {
+				stderr.printf("%s\n", e.message);
 			}
 			return 1;
+		}
+		
+		// FIXME test code;
+		try {
+			Country c = store.get_country_by_iso_code("JA");
+			stderr.printf("%d %s %s\n", c.id, c.iso_code, c.name);
+		} catch (StoreError e) {
+			stderr.printf("%s\n", e.message);
 		}
 		
 		if (args.length < 2) {
@@ -46,7 +56,7 @@ class TagRead {
 			stderr.printf("%s is not a valid URI.\n", args[1]);
 			return 1;
 		}
-		
+
 		// This is the information that will be stored per-file.
 		string? recording_mbid = null;
 		string? release_mbid = null;
