@@ -18,9 +18,24 @@ class TagRead {
 
 	public static int main(string[] args) {
 		Gst.init(ref args);
-		
+
+#if ENABLE_UNINSTALLED
+		stdout.printf("This is an UNINSTALLED build. Do not install it.\n");
+		stdout.printf("Using files from source directory: %s\n", Config.BUILD_SRCDIR);
+#endif
+
 		var store = new Store();
-		store.open();
+		
+		try {
+			store.open();
+		} catch (StoreError e) {
+			if (e is StoreError.CORRUPT_DB) {
+				stderr.printf("%s\n", e.message);
+				stderr.printf("To resolve this, try deleting the database file so it can be re-created.\n");
+				stderr.printf("Database path: %s\n", store.path);
+			}
+			return 1;
+		}
 		
 		if (args.length < 2) {
 			stderr.printf("Usage: %s file:///path/to/file\n", args[0]);
