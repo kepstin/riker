@@ -244,7 +244,7 @@ public class Store: Object {
 	}
 
 	/**
-	 * Look up a ArtistType by its row id.
+	 * Look up an ArtistType by its row id.
 	 *
 	 * @param id The ID (row id) of the ArtistType.
 	 * @return The ArtistType, or null if not found.
@@ -274,7 +274,7 @@ public class Store: Object {
 	}
 
 	/**
-	 * Look up a ArtistType by its name.
+	 * Look up an ArtistType by its name.
 	 *
 	 * @param name The name of the ArtistType.
 	 * @return The ArtistType, or null if not found.
@@ -301,6 +301,66 @@ public class Store: Object {
 			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
 		}
 		return artist_type;
+	}
+
+	/**
+	 * Look up a Gender by its row id.
+	 *
+	 * @param id The ID (row id) of the Gender.
+	 * @return The Gender, or null if not found.
+	 */
+	public Gender? get_gender_by_id(int id) throws StoreError {
+		int rc;
+		Gender gender = null;
+
+		/* Cache the prepared query */
+		if (Gender.select_by_id_stmt == null) {
+			rc = db.prepare_v2(Gender.select_by_id, Gender.select_by_id.length, out Gender.select_by_id_stmt);
+			if (rc != Sqlite.OK) {
+				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
+			}
+		}
+
+		/* Execute the query */
+		Gender.select_by_id_stmt.bind_int(1, id);
+		while ((rc = Gender.select_by_id_stmt.step()) == Sqlite.ROW) {
+			gender = new Gender.from_row(Gender.select_by_id_stmt);
+		}
+		Gender.select_by_id_stmt.reset();
+		if (rc != Sqlite.DONE) {
+			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
+		}
+		return gender;
+	}
+
+	/**
+	 * Look up a Gender by its name.
+	 *
+	 * @param name The name of the Gender.
+	 * @return The ArtistType, or null if not found.
+	 */
+	public Gender? get_gender_by_name(string name) throws StoreError {
+		int rc;
+		Gender gender = null;
+
+		/* Cache the prepared query */
+		if (Gender.select_by_name_stmt == null) {
+			rc = db.prepare_v2(Gender.select_by_name, Gender.select_by_name.length, out Gender.select_by_name_stmt);
+			if (rc != Sqlite.OK) {
+				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
+			}
+		}
+
+		/* Execute the query */
+		Gender.select_by_name_stmt.bind_text(1, name);
+		while ((rc = Gender.select_by_name_stmt.step()) == Sqlite.ROW) {
+			gender = new Gender.from_row(Gender.select_by_name_stmt);
+		}
+		Gender.select_by_name_stmt.reset();
+		if (rc != Sqlite.DONE) {
+			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
+		}
+		return gender;
 	}
 }
 

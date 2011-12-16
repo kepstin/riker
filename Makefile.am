@@ -12,6 +12,7 @@ store_libriker_store_la_SOURCES = \
 	store/artist_type.vala \
 	store/country.vala \
 	store/file.vala \
+	store/gender.vala \
 	store/store.vala
 store_libriker_store_la_VALAFLAGS = $(AM_VALAFLAGS) $(SQLITE_VALAFLAGS) --header=store/store.h --vapi=store/store.vapi
 store_libriker_store_la_CFLAGS = $(AM_CFLAGS) $(GLIB_CFLAGS) $(SQLITE_CFLAGS)

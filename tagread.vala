@@ -41,7 +41,7 @@ class TagRead {
 		
 		// FIXME test code;
 		try {
-			var c = store.get_artist_type_by_name("Person");
+			var c = store.get_gender_by_id(1);
 			stderr.printf("%d %s\n", c.id, c.name);
 		} catch (StoreError e) {
 			stderr.printf("%s\n", e.message);
