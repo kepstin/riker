@@ -5,6 +5,12 @@ CREATE TABLE riker (
 );
 INSERT INTO riker (schema_version) VALUES (0); -- Unstable schema version
 
+CREATE TABLE artist_mbid (
+	id		INTEGER PRIMARY KEY NOT NULL,
+	mbid		CHARACTER UNIQUE NOT NULL,
+	artist		INTEGER REFERENCES artist (id) NOT NULL
+);
+
 CREATE TABLE artist_type (
 	id		INTEGER PRIMARY KEY NOT NULL,
 	name		CHARACTER UNIQUE NOT NULL
@@ -46,7 +52,6 @@ INSERT INTO gender (name) VALUES ('Other');
 
 CREATE TABLE artist (
 	id		INTEGER PRIMARY KEY NOT NULL,
-	gid		CHARACTER UNIQUE NOT NULL,
 	name		CHARACTER NOT NULL,
 	sort_name	CHARACTER NOT NULL,
 	begin_date_year	INTEGER,

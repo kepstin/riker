@@ -51,7 +51,7 @@ public static int main(string[] args) {
 		return 1;
 	}
 	if (a != null) {
-		stdout.printf("%" + int64.FORMAT + " %s %s\n", a.id, a.name, a.sort_name);
+		stdout.printf("%" + int64.FORMAT + " %s %s %s\n", a.id, a.mbid, a.name, a.sort_name);
 		return 0;
 	} else {
 		stderr.printf("Artist not found in local db\n");
@@ -82,7 +82,7 @@ public static int main(string[] args) {
 		return 1;
 	}
 	
-	stdout.printf("%" + int64.FORMAT + " %s %s\n", a.id, a.name, a.sort_name);
+	stdout.printf("%" + int64.FORMAT + " %s %s %s\n", a.id, a.mbid, a.name, a.sort_name);
 	
 	return 0;
 }

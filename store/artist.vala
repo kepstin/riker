@@ -6,13 +6,16 @@ namespace Riker {
 		private string _name;
 		private string _sort_name;
 
-		public static const string select_by_id = "SELECT id, gid, name, sort_name FROM artist WHERE id = ?;";
+		public static const string select_by_id = "SELECT artist.id, artist_mbid.mbid, artist.name, artist.sort_name FROM artist, artist_mbid WHERE artist.id = ? AND artist_mbid.artist = artist.id;";
 		public static Sqlite.Statement select_by_id_stmt = null;
-		public static const string select_by_mbid = "SELECT id, gid, name, sort_name FROM artist WHERE gid = ?;";
+		public static const string select_by_mbid = "SELECT artist.id, artist_mbid.mbid, artist.name, artist.sort_name FROM artist, artist_mbid WHERE artist_mbid.mbid = ? AND artist_mbid.artist = artist.id;";
 		public static Sqlite.Statement select_by_mbid_stmt = null;
 		
-		private static const string insert_sql = "INSERT INTO artist (gid, name, sort_name) VALUES (?, ?, ?);";
+		private static const string insert_sql = "INSERT INTO artist (name, sort_name) VALUES (?, ?);";
 		private static Sqlite.Statement insert_stmt = null;
+
+		private static const string insert_mbid_sql = "INSERT INTO artist_mbid (mbid, artist) VALUES (?, ?);";
+		private static Sqlite.Statement insert_mbid_stmt = null;
 
 		public Artist.from_row(Sqlite.Statement stmt) {
 			Object(id: stmt.column_int(0), mbid: stmt.column_text(1), name: stmt.column_text(2), sort_name: stmt.column_text(3));
@@ -21,6 +24,7 @@ namespace Riker {
 		public void insert(Sqlite.Database db) throws StoreError {
 			int rc;
 
+			// Insert the artist
 			if (insert_stmt == null) {
 				rc = db.prepare_v2(insert_sql, insert_sql.length, out insert_stmt);
 				if (rc != Sqlite.OK) {
@@ -29,9 +33,8 @@ namespace Riker {
 			}
 			insert_stmt.reset();
 			
-			insert_stmt.bind_text(1, mbid);
-			insert_stmt.bind_text(2, name);
-			insert_stmt.bind_text(3, sort_name);
+			insert_stmt.bind_text(1, name);
+			insert_stmt.bind_text(2, sort_name);
 			
 			rc = insert_stmt.step();
 			if (rc != Sqlite.DONE) {
@@ -41,6 +44,23 @@ namespace Riker {
 			_id = db.last_insert_rowid();
 			if (_id == 0) {
 				throw new StoreError.BUG("No returned rowid");
+			}
+
+			// Insert the MBID
+			if (insert_mbid_stmt == null) {
+				rc = db.prepare_v2(insert_mbid_sql, insert_mbid_sql.length, out insert_mbid_stmt);
+				if (rc != Sqlite.OK) {
+					throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
+				}
+			}
+			insert_mbid_stmt.reset();
+
+			insert_mbid_stmt.bind_text(1, mbid);
+			insert_mbid_stmt.bind_int64(2, id);
+
+			rc = insert_mbid_stmt.step();
+			if (rc != Sqlite.DONE) {
+				throw new StoreError.BUG("Error executing sql: " + db.errmsg());
 			}
 		}
 
