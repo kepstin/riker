@@ -16,10 +16,14 @@ CREATE TABLE country (
 	name		CHARACTER NOT NULL
 );
 -- MusicBrainz-specific nonstandard country codes; others will be imported automatically.
+INSERT INTO country (iso_code, name) VALUES ('AN', 'Netherlands Antilles (historical, 1954-2010)');
+INSERT INTO country (iso_code, name) VALUES ('CS', 'Serbia and Montenegro (historical, 2003-2006)');
+INSERT INTO country (iso_code, name) VALUES ('SU', 'Soviet Union (historical, 1922-1991)');
 INSERT INTO country (iso_code, name) VALUES ('XC', 'Czechoslovakia (historical, 1918-1992)');
 INSERT INTO country (iso_code, name) VALUES ('XE', 'Europe');
 INSERT INTO country (iso_code, name) VALUES ('XG', 'East Germany (historical, 1949-1990)');
 INSERT INTO country (iso_code, name) VALUES ('XW', '[Worldwide]');
+INSERT INTO country (iso_code, name) VALUES ('YU', 'Yugoslavia (historical, 1918-2003)');
 
 CREATE TABLE gender (
 	id		INTEGER PRIMARY KEY NOT NULL,
@@ -88,10 +92,10 @@ CREATE TABLE release_group (
 CREATE TABLE language (
 	id		INTEGER PRIMARY KEY NOT NULL,
 	iso_code_3t	CHARACTER UNIQUE NOT NULL,
-	iso_code_3b	CHARACTER UNIQUE NOT NULL,
-	iso_code_2	CHARACTER UNIQUE,
 	name		CHARACTER NOT NULL
 );
+INSERT INTO language (iso_code_3t, name) VALUES ('art', '[Artificial (Other)]');
+INSERT INTO language (iso_code_3t, name) VALUES ('mul', '[Multiple languages]');
 
 CREATE TABLE script (
 	id		INTEGER PRIMARY KEY NOT NULL,
@@ -99,6 +103,7 @@ CREATE TABLE script (
 	iso_number	CHARACTER NOT NULL,
 	name		CHARACTER NOT NULL
 );
+INSERT INTO script (iso_code, iso_number, name) VALUES ('Qaaa', 900, '[Multiple scripts]');
 
 CREATE TABLE release_status (
 	id		INTEGER PRIMARY KEY NOT NULL,
