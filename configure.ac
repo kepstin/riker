@@ -7,9 +7,11 @@ AM_INIT_AUTOMAKE([foreign subdir-objects dist-xz])
 
 LT_INIT([disable-static])
 
-AC_ARG_ENABLE([uninstalled],
-	[Support executing the program from the build directory],
-	[AC_SUBST([UNINSTALLED_VALAFLAGS], ["-D ENABLE_UNINSTALLED"])])
+# Uninstalled is force-enabled for now
+AC_SUBST([UNINSTALLED_VALAFLAGS], ["-D ENABLE_UNINSTALLED"])
+#AC_ARG_ENABLE([uninstalled],
+#	[Support executing the program from the build directory],
+#	[AC_SUBST([UNINSTALLED_VALAFLAGS], ["-D ENABLE_UNINSTALLED"])])
 
 AM_PROG_VALAC
 

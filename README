@@ -20,7 +20,7 @@ Still with me? Now we're ready to go. cd into the riker source directory, and
 run these commands:
 
 ./autogen.sh
-./configure --enable-uninstalled
+./configure
 make
 
 And you'll have it built. Or maybe not; in which case you have some errors to
