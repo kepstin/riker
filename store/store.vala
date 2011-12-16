@@ -117,7 +117,7 @@ public class Store: Object {
 		stderr.printf("Database schema loaded.\n");
 	}
 	
-	public Country get_country_by_id(int id) throws StoreError {
+	public Country? get_country_by_id(int id) throws StoreError {
 		int rc;
 		Country country = null;
 
@@ -159,6 +159,50 @@ public class Store: Object {
 			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
 		}
 		return country;
+	}
+
+	public ArtistType? get_artist_type_by_id(int id) throws StoreError {
+		int rc;
+		ArtistType artist_type = null;
+
+		if (ArtistType.select_by_id_stmt == null) {
+			rc = db.prepare_v2(ArtistType.select_by_id, ArtistType.select_by_id.length, out ArtistType.select_by_id_stmt);
+			if (rc != Sqlite.OK) {
+				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
+			}
+		}
+		
+		ArtistType.select_by_id_stmt.bind_int(1, id);
+		while ((rc = ArtistType.select_by_id_stmt.step()) == Sqlite.ROW) {
+			artist_type = new ArtistType.from_row(ArtistType.select_by_id_stmt);
+		}
+		ArtistType.select_by_id_stmt.reset();
+		if (rc != Sqlite.DONE) {
+			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
+		}
+		return artist_type;
+	}
+
+	public ArtistType? get_artist_type_by_name(string name) throws StoreError {
+		int rc;
+		ArtistType artist_type = null;
+
+		if (ArtistType.select_by_name_stmt == null) {
+			rc = db.prepare_v2(ArtistType.select_by_name, ArtistType.select_by_name.length, out ArtistType.select_by_name_stmt);
+			if (rc != Sqlite.OK) {
+				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
+			}
+		}
+		
+		ArtistType.select_by_name_stmt.bind_text(1, name);
+		while ((rc = ArtistType.select_by_name_stmt.step()) == Sqlite.ROW) {
+			artist_type = new ArtistType.from_row(ArtistType.select_by_name_stmt);
+		}
+		ArtistType.select_by_name_stmt.reset();
+		if (rc != Sqlite.DONE) {
+			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
+		}
+		return artist_type;
 	}
 }
 

@@ -41,8 +41,8 @@ class TagRead {
 		
 		// FIXME test code;
 		try {
-			Country c = store.get_country_by_iso_code("JA");
-			stderr.printf("%d %s %s\n", c.id, c.iso_code, c.name);
+			var c = store.get_artist_type_by_name("Person");
+			stderr.printf("%d %s\n", c.id, c.name);
 		} catch (StoreError e) {
 			stderr.printf("%s\n", e.message);
 		}

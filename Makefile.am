@@ -9,6 +9,7 @@ AM_VALAFLAGS = $(UNINSTALLED_VALAFLAGS) --vapidir=$(srcdir) --pkg=config
 AM_CFLAGS = -DBUILD_SRCDIR="\"$(abs_srcdir)\""
 
 store_libriker_store_la_SOURCES = \
+	store/artist_type.vala \
 	store/country.vala \
 	store/file.vala \
 	store/store.vala
