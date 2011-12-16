@@ -28,7 +28,7 @@ help me fix.
 
 There are two test applications that are currently built. First: tagread
 To run it:
-./tagread file:///home/user/Music/your-fav-song.mp3
+./tagread ~/Music/your-fav-song.mp3
 
 It'll print a bunch of info about setting up the database, then read the 
 tags from the file. Then it does a MusicBrainz webservice lookup, and prints

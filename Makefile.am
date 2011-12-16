@@ -5,8 +5,9 @@ noinst_HEADERS = store/store.h
 noinst_PROGRAMS = tagread add_artist
 lib_LTLIBRARIES = store/libriker-store.la
 
-AM_VALAFLAGS = $(UNINSTALLED_VALAFLAGS) --vapidir=$(srcdir) --pkg=config
-AM_CFLAGS = -DBUILD_SRCDIR="\"$(abs_srcdir)\""
+AM_VALAFLAGS = $(UNINSTALLED_VALAFLAGS) $(GLIB_VALAFLAGS) --vapidir=$(srcdir) --pkg=config
+AM_CFLAGS = $(GLIB_CFLAGS) -DBUILD_SRCDIR="\"$(abs_srcdir)\""
+AM_LIBADD = $(GLIB_LIBS)
 
 store_libriker_store_la_SOURCES = \
 	store/artist.vala \
@@ -16,16 +17,16 @@ store_libriker_store_la_SOURCES = \
 	store/gender.vala \
 	store/store.vala
 store_libriker_store_la_VALAFLAGS = $(AM_VALAFLAGS) $(SQLITE_VALAFLAGS) --header=store/store.h --vapi=store/store.vapi
-store_libriker_store_la_CFLAGS = $(AM_CFLAGS) $(GLIB_CFLAGS) $(SQLITE_CFLAGS)
-store_libriker_store_la_LIBADD = $(GLIB_LIBS) $(SQLITE_LIBS)
+store_libriker_store_la_CFLAGS = $(AM_CFLAGS) $(SQLITE_CFLAGS)
+store_libriker_store_la_LIBADD = $(AM_LIBADD) $(SQLITE_LIBS)
 store_libriker_store_la_LDFLAGS = -release $(VERSION)
 
 tagread_SOURCES = tagread.vala
 tagread_CFLAGS = $(AM_CFLAGS) $(SQLITE_CFLAGS) $(GSTREAMER_CFLAGS) $(MB4_CFLAGS) -I $(srcdir)/store
 tagread_VALAFLAGS = $(AM_VALAFLAGS) $(SQLITE_VALAFLAGS) $(GSTREAMER_VALAFLAGS) $(MB4_VALAFLAGS) --vapidir=$(srcdir)/store --pkg=store
-tagread_LDADD = $(GSTREAMER_LIBS) $(MB4_LIBS) store/libriker-store.la
+tagread_LDADD = $(AM_LIBADD) $(GSTREAMER_LIBS) $(MB4_LIBS) store/libriker-store.la
 
 add_artist_SOURCES = add_artist.vala
 add_artist_CFLAGS = $(AM_CFLAGS) $(SQLITE_CFLAGS) $(GSTREAMER_CFLAGS) $(MB4_CFLAGS) -I $(srcdir)/store
 add_artist_VALAFLAGS = $(AM_VALAFLAGS) $(SQLITE_VALAFLAGS) $(GSTREAMER_VALAFLAGS) $(MB4_VALAFLAGS) --vapidir=$(srcdir)/store --pkg=store
-add_artist_LDADD = $(GSTREAMER_LIBS) $(MB4_LIBS) store/libriker-store.la
+add_artist_LDADD = $(AM_LIBADD) $(GSTREAMER_LIBS) $(MB4_LIBS) store/libriker-store.la

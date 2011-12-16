@@ -15,7 +15,8 @@ AC_SUBST([UNINSTALLED_VALAFLAGS], ["-D ENABLE_UNINSTALLED"])
 
 AM_PROG_VALAC
 
-PKG_CHECK_MODULES([GLIB], [glib-2.0])
+PKG_CHECK_MODULES([GLIB], [glib-2.0 gio-2.0])
+AC_SUBST([GLIB_VALAFLAGS], ["--pkg=gio-2.0"])
 
 PKG_CHECK_MODULES([GSTREAMER], [gstreamer-0.10 gstreamer-tag-0.10])
 AC_SUBST([GSTREAMER_VALAFLAGS], ["--pkg=gstreamer-0.10 --pkg=gstreamer-tag-0.10"])

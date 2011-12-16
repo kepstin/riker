@@ -52,11 +52,9 @@ class TagRead {
 			return 1;
 		}
 		
-		if (!Gst.uri_is_valid(args[1])) {
-			stderr.printf("%s is not a valid URI.\n", args[1]);
-			return 1;
-		}
-
+		GLib.File filearg = GLib.File.new_for_commandline_arg(args[1]);
+		var uri = filearg.get_uri();
+		
 		// This is the information that will be stored per-file.
 		string? recording_mbid = null;
 		string? release_mbid = null;
@@ -69,7 +67,7 @@ class TagRead {
 		var pipe = new Gst.Pipeline("pipeline");
 		
 		dynamic Gst.Element dec = Gst.ElementFactory.make("uridecodebin", null);
-		dec.uri = args[1];
+		dec.uri = uri;
 		pipe.add(dec);
 		
 		Gst.Element sink = Gst.ElementFactory.make("fakesink", null);
