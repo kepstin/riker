@@ -9,6 +9,9 @@ CREATE TABLE artist_type (
 	id		INTEGER PRIMARY KEY NOT NULL,
 	name		CHARACTER UNIQUE NOT NULL
 );
+INSERT INTO artist_type (name) VALUES ('Person');
+INSERT INTO artist_type (name) VALUES ('Group');
+INSERT INTO artist_type (name) VALUES ('Other');
 
 CREATE TABLE country (
 	id		INTEGER PRIMARY KEY NOT NULL,
@@ -24,11 +27,22 @@ INSERT INTO country (iso_code, name) VALUES ('XE', 'Europe');
 INSERT INTO country (iso_code, name) VALUES ('XG', 'East Germany (historical, 1949-1990)');
 INSERT INTO country (iso_code, name) VALUES ('XW', '[Worldwide]');
 INSERT INTO country (iso_code, name) VALUES ('YU', 'Yugoslavia (historical, 1918-2003)');
+-- TODO: Find a better way to load countries. For testing, here are the top 10:
+INSERT INTO country (iso_code, name) VALUES ('US', 'United States');
+INSERT INTO country (iso_code, name) VALUES ('GB', 'United Kingdom');
+INSERT INTO country (iso_code, name) VALUES ('DE', 'Germany');
+INSERT INTO country (iso_code, name) VALUES ('JA', 'Japan');
+INSERT INTO country (iso_code, name) VALUES ('FR', 'France');
+INSERT INTO country (iso_code, name) VALUES ('NL', 'Netherlands');
+INSERT INTO country (iso_code, name) VALUES ('CA', 'Canada');
 
 CREATE TABLE gender (
 	id		INTEGER PRIMARY KEY NOT NULL,
 	name		CHARACTER UNIQUE NOT NULL
 );
+INSERT INTO gender (name) VALUES ('Male');
+INSERT INTO gender (name) VALUES ('Female');
+INSERT INTO gender (name) VALUES ('Other');
 
 CREATE TABLE artist (
 	id		INTEGER PRIMARY KEY NOT NULL,
@@ -96,14 +110,32 @@ CREATE TABLE language (
 );
 INSERT INTO language (iso_code_3t, name) VALUES ('art', '[Artificial (Other)]');
 INSERT INTO language (iso_code_3t, name) VALUES ('mul', '[Multiple languages]');
+-- TODO: Find a better way to load languages. For testing, here are the top 10:
+INSERT INTO language (iso_code_3t, name) VALUES ('eng', 'English');
+INSERT INTO language (iso_code_3t, name) VALUES ('jpn', 'Japanese');
+INSERT INTO language (iso_code_3t, name) VALUES ('deu', 'German');
+INSERT INTO language (iso_code_3t, name) VALUES ('spa', 'Spanish');
+INSERT INTO language (iso_code_3t, name) VALUES ('fra', 'French');
+INSERT INTO language (iso_code_3t, name) VALUES ('ita', 'Italian');
+INSERT INTO language (iso_code_3t, name) VALUES ('por', 'Portuguese');
+INSERT INTO language (iso_code_3t, name) VALUES ('fin', 'Finnish');
 
 CREATE TABLE script (
 	id		INTEGER PRIMARY KEY NOT NULL,
 	iso_code	CHARACTER UNIQUE NOT NULL,
-	iso_number	CHARACTER NOT NULL,
 	name		CHARACTER NOT NULL
 );
-INSERT INTO script (iso_code, iso_number, name) VALUES ('Qaaa', 900, '[Multiple scripts]');
+INSERT INTO script (iso_code, name) VALUES ('Qaaa', '[Multiple scripts]');
+-- TODO: Find a better way to load scripts. For testing, here are the top 10:
+INSERT INTO script (iso_code, name) VALUES ('Latn', 'Latin');
+INSERT INTO script (iso_code, name) VALUES ('Jpan', 'Japanese');
+INSERT INTO script (iso_code, name) VALUES ('Cyrl', 'Cyrillic');
+INSERT INTO script (iso_code, name) VALUES ('Hant', 'Han (Traditional variant)');
+INSERT INTO script (iso_code, name) VALUES ('Grek', 'Greek');
+INSERT INTO script (iso_code, name) VALUES ('Kore', 'Korean');
+INSERT INTO script (iso_code, name) VALUES ('Hebr', 'Hebrew');
+INSERT INTO script (iso_code, name) VALUES ('Hans', 'Han (Simplified variant)');
+INSERT INTO script (iso_code, name) VALUES ('Kana', 'Katakana');
 
 CREATE TABLE release_status (
 	id		INTEGER PRIMARY KEY NOT NULL,
