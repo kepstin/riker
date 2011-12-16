@@ -224,7 +224,7 @@ public class Store: Object {
 		Country country = null;
 
 		/* Cache the prepared query */
-		if (Country.select_by_id_stmt == null) {
+		if (Country.select_by_iso_code_stmt == null) {
 			rc = db.prepare_v2(Country.select_by_iso_code, Country.select_by_iso_code.length, out Country.select_by_iso_code_stmt);
 			if (rc != Sqlite.OK) {
 				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
@@ -361,6 +361,51 @@ public class Store: Object {
 			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
 		}
 		return gender;
+	}
+
+	/**
+	 * Look up a Artist by its MBID.
+	 *
+	 * @param mbid The MusicBrainz identifier for the artist.
+	 * @return The Artist, or null if not found.
+	 */
+	public Artist? get_artist_by_mbid(string mbid) throws StoreError {
+		int rc;
+		Artist artist = null;
+
+		/* Cache the prepared query */
+		if (Artist.select_by_mbid_stmt == null) {
+			rc = db.prepare_v2(Artist.select_by_mbid, Artist.select_by_mbid.length, out Artist.select_by_mbid_stmt);
+			if (rc != Sqlite.OK) {
+				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
+			}
+		}
+
+		/* Execute the query */
+		Artist.select_by_mbid_stmt.bind_text(1, mbid);
+		while ((rc = Artist.select_by_mbid_stmt.step()) == Sqlite.ROW) {
+			artist = new Artist.from_row(Artist.select_by_mbid_stmt);
+		}
+		Artist.select_by_mbid_stmt.reset();
+		if (rc != Sqlite.DONE) {
+			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
+		}
+		return artist;
+	}
+	
+	/**
+	 * Save an Artist, updating or creating it as necessary.
+	 *
+	 * @param artist The Artist object to save to the database
+	 */
+	public void save_artist(Artist artist) throws StoreError {
+		/*
+		 * Depending on whether the artist already has an ID, we
+		 * choose between inserting and updating.
+		 */
+		if (artist.id == 0) {
+			artist.insert(db);
+		}
 	}
 }
 
