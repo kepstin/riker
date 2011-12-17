@@ -7,36 +7,64 @@ namespace Riker {
 		private string _sort_name;
 
 		public static const string select_by_id = "SELECT artist.id, artist_mbid.mbid, artist.name, artist.sort_name FROM artist, artist_mbid WHERE artist.id = ? AND artist_mbid.artist = artist.id;";
-		public static Sqlite.Statement select_by_id_stmt = null;
-		public static const string select_by_mbid = "SELECT artist.id, artist_mbid.mbid, artist.name, artist.sort_name FROM artist, artist_mbid WHERE artist_mbid.mbid = ? AND artist_mbid.artist = artist.id;";
-		public static Sqlite.Statement select_by_mbid_stmt = null;
-		
+		public static const string select_from_mbid_sql = "SELECT artist.id, artist_mbid.mbid, artist.name, artist.sort_name FROM artist, artist_mbid WHERE artist_mbid.mbid = ? AND artist_mbid.artist = artist.id;";
 		private static const string insert_sql = "INSERT INTO artist (name, sort_name) VALUES (?, ?);";
-		private static Sqlite.Statement insert_stmt = null;
-
 		private static const string insert_mbid_sql = "INSERT INTO artist_mbid (mbid, artist) VALUES (?, ?);";
-		private static Sqlite.Statement insert_mbid_stmt = null;
 
 		public Artist.from_row(Sqlite.Statement stmt) {
 			Object(id: stmt.column_int(0), mbid: stmt.column_text(1), name: stmt.column_text(2), sort_name: stmt.column_text(3));
 		}
 		
+		/**
+		 * Lookup an artist in a db by an MBID.
+		 *
+		 * @param db The database to look up the artist in.
+		 * @param mbid The MBID of the artist to look up.
+		 * @return The artist if found, or null otherwise.
+		 */
+		public static Artist? from_mbid(Sqlite.Database db, string mbid) throws StoreError {
+			int rc;
+			Artist artist = null;
+			Sqlite.Statement stmt;
+
+			rc = db.prepare_v2(select_from_mbid_sql, select_from_mbid_sql.length, out stmt);
+			if (rc != Sqlite.OK) {
+				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
+			}
+
+			stmt.bind_text(1, mbid);
+
+			while ((rc = stmt.step()) == Sqlite.ROW) {
+				artist = new Artist.from_row(stmt);
+			}
+			if (rc != Sqlite.DONE) {
+				throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
+			}
+			return artist;
+		}
+
+		/**
+		 * Insert this artist into the db as a new artist.
+		 *
+		 * After the insert, the id field will be updated with the row
+		 * id of the newly created artist in the database.
+		 *
+		 * @param db The database to insert the artist into.
+		 */
 		public void insert(Sqlite.Database db) throws StoreError {
 			int rc;
+			Sqlite.Statement stmt;
 
-			// Insert the artist
-			if (insert_stmt == null) {
-				rc = db.prepare_v2(insert_sql, insert_sql.length, out insert_stmt);
-				if (rc != Sqlite.OK) {
-					throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
-				}
+			/* Insert the artist */
+			rc = db.prepare_v2(insert_sql, insert_sql.length, out stmt);
+			if (rc != Sqlite.OK) {
+				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
 			}
-			insert_stmt.reset();
 			
-			insert_stmt.bind_text(1, name);
-			insert_stmt.bind_text(2, sort_name);
+			stmt.bind_text(1, name);
+			stmt.bind_text(2, sort_name);
 			
-			rc = insert_stmt.step();
+			rc = stmt.step();
 			if (rc != Sqlite.DONE) {
 				throw new StoreError.BUG("Error executing sql: " + db.errmsg());
 			}
@@ -46,19 +74,16 @@ namespace Riker {
 				throw new StoreError.BUG("No returned rowid");
 			}
 
-			// Insert the MBID
-			if (insert_mbid_stmt == null) {
-				rc = db.prepare_v2(insert_mbid_sql, insert_mbid_sql.length, out insert_mbid_stmt);
-				if (rc != Sqlite.OK) {
-					throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
-				}
+			/* Insert the MBID */
+			rc = db.prepare_v2(insert_mbid_sql, insert_mbid_sql.length, out stmt);
+			if (rc != Sqlite.OK) {
+				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
 			}
-			insert_mbid_stmt.reset();
 
-			insert_mbid_stmt.bind_text(1, mbid);
-			insert_mbid_stmt.bind_int64(2, id);
+			stmt.bind_text(1, mbid);
+			stmt.bind_int64(2, id);
 
-			rc = insert_mbid_stmt.step();
+			rc = stmt.step();
 			if (rc != Sqlite.DONE) {
 				throw new StoreError.BUG("Error executing sql: " + db.errmsg());
 			}

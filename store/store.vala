@@ -370,27 +370,7 @@ public class Store: Object {
 	 * @return The Artist, or null if not found.
 	 */
 	public Artist? get_artist_by_mbid(string mbid) throws StoreError {
-		int rc;
-		Artist artist = null;
-
-		/* Cache the prepared query */
-		if (Artist.select_by_mbid_stmt == null) {
-			rc = db.prepare_v2(Artist.select_by_mbid, Artist.select_by_mbid.length, out Artist.select_by_mbid_stmt);
-			if (rc != Sqlite.OK) {
-				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
-			}
-		}
-
-		/* Execute the query */
-		Artist.select_by_mbid_stmt.bind_text(1, mbid);
-		while ((rc = Artist.select_by_mbid_stmt.step()) == Sqlite.ROW) {
-			artist = new Artist.from_row(Artist.select_by_mbid_stmt);
-		}
-		Artist.select_by_mbid_stmt.reset();
-		if (rc != Sqlite.DONE) {
-			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
-		}
-		return artist;
+		return Artist.from_mbid(db, mbid);
 	}
 	
 	/**
