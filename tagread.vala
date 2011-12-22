@@ -135,7 +135,7 @@ class TagRead {
 		
 		print("Performing a musicbrainz query...\n");
 		
-		Mb4.Query mb4_query = new Mb4.Query("Riker/0.1");
+		Mb4.Query mb4_query = new Mb4.Query("Riker/0.1 ( http://www.kepstin.ca/projects/riker )");
 		Mb4.Metadata m = mb4_query.query("release", release_mbid, null, inc: "media recordings");
 		
 		unowned Mb4.Release r = m.release;

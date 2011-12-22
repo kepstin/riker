@@ -59,7 +59,7 @@ public static int main(string[] args) {
 	
 	stderr.printf("Looking up artist with mbid %s on webservice\n", artist_mbid);
 	
-	Mb4.Query mb = new Mb4.Query("Riker/0.1");
+	Mb4.Query mb = new Mb4.Query("Riker/0.1 ( http://www.kepstin.ca/projects/riker )");
 	Mb4.Metadata m = mb.query("artist", artist_mbid, null, inc: "aliases");
 	
 	unowned Mb4.Artist mba = m.artist;
