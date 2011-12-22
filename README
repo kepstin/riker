@@ -41,7 +41,8 @@ To run it:
 (Or if you don't remember any artist MBIDs offhand, I included a default:)
 ./add_artist
 
-It'll go and set up the database (if you've already run tagread it'll be faster the second time, since the database schema is already set up), then look up an
+It'll go and set up the database (if you've already run tagread it'll be faster
+the second time, since the database schema is already set up), then look up an
 artist. If the artist is not in the db, it'll query the MusicBrainz webservice
 for info and add the artist to the db.
 Try running it twice on the same artist.
