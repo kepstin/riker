@@ -189,28 +189,8 @@ public class Store: Object {
 	 * @param id The ID (row id) of the Country.
 	 * @return The Country, or null if not found.
 	 */
-	public Country? get_country_by_id(int id) throws StoreError {
-		int rc;
-		Country country = null;
-
-		/* Cache the prepared query */
-		if (Country.select_by_id_stmt == null) {
-			rc = db.prepare_v2(Country.select_by_id, Country.select_by_id.length, out Country.select_by_id_stmt);
-			if (rc != Sqlite.OK) {
-				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
-			}
-		}
-
-		/* Execute the query */
-		Country.select_by_id_stmt.bind_int(1, id);
-		while ((rc = Country.select_by_id_stmt.step()) == Sqlite.ROW) {
-			country = new Country.from_row(Country.select_by_id_stmt);
-		}
-		Country.select_by_id_stmt.reset();
-		if (rc != Sqlite.DONE) {
-			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
-		}
-		return country;
+	public Country? get_country_by_id(int64 id) throws StoreError {
+		return Country.from_id(db, id);
 	}
 
 	/**
@@ -220,27 +200,7 @@ public class Store: Object {
 	 * @return The Country, or null if not found.
 	 */
 	public Country? get_country_by_iso_code(string iso_code) throws StoreError {
-		int rc;
-		Country country = null;
-
-		/* Cache the prepared query */
-		if (Country.select_by_iso_code_stmt == null) {
-			rc = db.prepare_v2(Country.select_by_iso_code, Country.select_by_iso_code.length, out Country.select_by_iso_code_stmt);
-			if (rc != Sqlite.OK) {
-				throw new StoreError.BUG("Failed to prepare statement: " + db.errmsg());
-			}
-		}
-
-		/* Execute the query */
-		Country.select_by_iso_code_stmt.bind_text(1, iso_code);
-		while ((rc = Country.select_by_iso_code_stmt.step()) == Sqlite.ROW) {
-			country = new Country.from_row(Country.select_by_iso_code_stmt);
-		}
-		Country.select_by_iso_code_stmt.reset();
-		if (rc != Sqlite.DONE) {
-			throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
-		}
-		return country;
+		return Country.from_iso_code(db, iso_code);
 	}
 
 	/**
