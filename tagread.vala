@@ -39,14 +39,6 @@ class TagRead {
 			return 1;
 		}
 		
-		// FIXME test code;
-		try {
-			var c = store.get_gender_by_id(1);
-			stderr.printf("%d %s\n", c.id, c.name);
-		} catch (StoreError e) {
-			stderr.printf("%s\n", e.message);
-		}
-		
 		if (args.length < 2) {
 			stderr.printf("Usage: %s file:///path/to/file\n", args[0]);
 			return 1;
