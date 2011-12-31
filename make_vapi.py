@@ -64,6 +64,7 @@ class XMLVisitor:
         elif tag == 'list':
             self.visit_list(node)
         elif tag == 'boilerplate':
+            # FIXME!
             pass 
         elif tag == 'entity':
             self.visit_entity()
@@ -132,15 +133,24 @@ class XMLVisitor:
             self.decr ()
             self.writeln ('}')
         elif type == 'object':
+            self.writeln ('public %s? %s { ' % (uppername, uncameled_name))
+            self.incr ()
             self.writeln ('[CCode (cname = "%s_%s_get_%s")]' %
                           (namespace, classname, name))
-            self.writeln ('public %s? %s { get; }' % (uppername, uncameled_name))
+            self.writeln ('get;')
+            self.decr ()
+            self.writeln ('}')
         elif type == 'integer' or type == 'double':
-            self.writeln ('[CCode (cname = "%s_%s_get_%s")]' %
-                          (namespace, classname, name))
-            self.writeln ('public %s %s { get; }' % 
+            self.writeln ('public %s %s { ' % 
                             ("int" if type == "integer" else "double",
                              uncameled_name))
+            self.incr ()
+            self.writeln ('[CCode (cname = "%s_%s_get_%s")]' %
+                          (namespace, classname, name))
+            self.writeln ('get;')
+            self.decr ()
+            self.writeln ('}')
+
         else:
             print ('unknown type of property: "%s" - skipped' % type)
             pass
