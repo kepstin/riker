@@ -1,0 +1,2 @@
+set your LD_LIBRARY_PATH appropriately so that 
+libmusicbrainz4vala.so and libmusicbrainz4.so can be found.
