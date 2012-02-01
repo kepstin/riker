@@ -51,7 +51,12 @@ public static int main(string[] args) {
 		return 1;
 	}
 	if (a != null) {
-		stdout.printf("%" + int64.FORMAT + " %s %s %s\n", a.id, a.mbid, a.name, a.sort_name);
+		stdout.printf("%" + int64.FORMAT + " %s %s %s", a.id, a.mbid, a.name, a.sort_name);
+		if (a.country != null) {
+			stdout.printf(" %s", a.country.name);
+		}
+		stdout.printf("\n");
+
 		return 0;
 	} else {
 		stderr.printf("Artist not found in local db\n");
@@ -73,6 +78,7 @@ public static int main(string[] args) {
 	a.mbid = mba.id;
 	a.name = mba.name;
 	a.sort_name = mba.sort_name;
+	a.country = store.get_country_by_iso_code(mba.country);
 	
 	stderr.printf("Saving artist to local db\n");
 	try {
@@ -82,7 +88,11 @@ public static int main(string[] args) {
 		return 1;
 	}
 	
-	stdout.printf("%" + int64.FORMAT + " %s %s %s\n", a.id, a.mbid, a.name, a.sort_name);
+	stdout.printf("%" + int64.FORMAT + " %s %s %s", a.id, a.mbid, a.name, a.sort_name);
+	if (a.country != null) {
+		stdout.printf(" %s", a.country.name);
+	}
+	stdout.printf("\n");
 	
 	return 0;
 }

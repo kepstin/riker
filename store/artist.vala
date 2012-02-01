@@ -23,14 +23,20 @@ namespace Riker {
 		private string _mbid;
 		private string _name;
 		private string _sort_name;
+		private Country? _country;
 
-		public static const string select_by_id_sql = "SELECT artist.id, artist_mbid.mbid, artist.name, artist.sort_name FROM artist, artist_mbid WHERE artist.id = ? AND artist_mbid.artist = artist.id;";
-		public static const string select_from_mbid_sql = "SELECT artist.id, artist_mbid.mbid, artist.name, artist.sort_name FROM artist, artist_mbid WHERE artist_mbid.mbid = ? AND artist_mbid.artist = artist.id;";
-		private static const string insert_sql = "INSERT INTO artist (name, sort_name) VALUES (?, ?);";
+		public static const string select_by_id_sql = "SELECT artist.id, artist_mbid.mbid, artist.name, artist.sort_name, artist.country FROM artist, artist_mbid WHERE artist.id = ? AND artist_mbid.artist = artist.id;";
+		public static const string select_from_mbid_sql = "SELECT artist.id, artist_mbid.mbid, artist.name, artist.sort_name, artist.country FROM artist, artist_mbid WHERE artist_mbid.mbid = ? AND artist_mbid.artist = artist.id;";
+		private static const string insert_sql = "INSERT INTO artist (name, sort_name, country) VALUES (?, ?, ?);";
 		private static const string insert_mbid_sql = "INSERT INTO artist_mbid (mbid, artist) VALUES (?, ?);";
 
-		private Artist.from_row(Sqlite.Statement stmt) {
-			Object(id: stmt.column_int(0), mbid: stmt.column_text(1), name: stmt.column_text(2), sort_name: stmt.column_text(3));
+		private Artist.from_row(Sqlite.Database db, Sqlite.Statement stmt) throws StoreError {
+			Country? country = null;
+			if (stmt.column_type(4) == Sqlite.INTEGER) {
+				int64 country_id = stmt.column_int64(4);
+				country = Country.from_id(db, country_id);
+			}
+			Object(id: stmt.column_int(0), mbid: stmt.column_text(1), name: stmt.column_text(2), sort_name: stmt.column_text(3), country: country);
 		}
 		
 		/**
@@ -53,7 +59,7 @@ namespace Riker {
 			stmt.bind_text(1, mbid);
 
 			while ((rc = stmt.step()) == Sqlite.ROW) {
-				artist = new Artist.from_row(stmt);
+				artist = new Artist.from_row(db, stmt);
 			}
 			if (rc != Sqlite.DONE) {
 				throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
@@ -81,6 +87,11 @@ namespace Riker {
 			
 			stmt.bind_text(1, name);
 			stmt.bind_text(2, sort_name);
+			if (country == null) {
+				stmt.bind_null(3);
+			} else {
+				stmt.bind_int64(3, country.id);
+			}
 			
 			rc = stmt.step();
 			if (rc != Sqlite.DONE) {
@@ -154,6 +165,18 @@ namespace Riker {
 			}
 			construct set {
 				_sort_name = value;
+			}
+		}
+		
+		/**
+		 * The country of the Artist.
+		 */
+		public Country? country {
+			get {
+				return _country;
+			}
+			construct set {
+				_country = value;
 			}
 		}
 	}

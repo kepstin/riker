@@ -27,7 +27,7 @@ namespace Riker {
 		public static const string select_by_iso_code_sql = "SELECT id, iso_code, name FROM country WHERE iso_code = ?";
 
 		public Country.from_row(Sqlite.Statement stmt) {
-			Object(id: stmt.column_int(0), iso_code: stmt.column_text(1), name: stmt.column_text(2));
+			Object(id: stmt.column_int64(0), iso_code: stmt.column_text(1), name: stmt.column_text(2));
 		}
 
 		/**
@@ -74,6 +74,7 @@ namespace Riker {
 			if (rc != Sqlite.DONE) {
 				throw new StoreError.BUG("BUG: Error executing sql: " + db.errmsg());
 			}
+
 			return country;
 		}
 

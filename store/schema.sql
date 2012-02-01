@@ -37,7 +37,7 @@ INSERT INTO country (iso_code, name) VALUES ('YU', 'Yugoslavia (historical, 1918
 INSERT INTO country (iso_code, name) VALUES ('US', 'United States');
 INSERT INTO country (iso_code, name) VALUES ('GB', 'United Kingdom');
 INSERT INTO country (iso_code, name) VALUES ('DE', 'Germany');
-INSERT INTO country (iso_code, name) VALUES ('JA', 'Japan');
+INSERT INTO country (iso_code, name) VALUES ('JP', 'Japan');
 INSERT INTO country (iso_code, name) VALUES ('FR', 'France');
 INSERT INTO country (iso_code, name) VALUES ('NL', 'Netherlands');
 INSERT INTO country (iso_code, name) VALUES ('CA', 'Canada');
