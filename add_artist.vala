@@ -59,10 +59,10 @@ public static int main(string[] args) {
 	
 	stderr.printf("Looking up artist with mbid %s on webservice\n", artist_mbid);
 	
-	Mb4.Query mb = new Mb4.Query("Riker/0.1 ( http://www.kepstin.ca/projects/riker )");
-	Mb4.Metadata m = mb.query("artist", artist_mbid, null, inc: "aliases");
+	Musicbrainz.Query mb = new Musicbrainz.Query("Riker/0.1 ( http://www.kepstin.ca/projects/riker )");
+	Musicbrainz.Metadata m = mb.query("artist", artist_mbid, null, inc: "aliases");
 	
-	unowned Mb4.Artist mba = m.artist;
+	Musicbrainz.Artist mba = m.artist;
 	if (mba == null) {
 		stderr.printf("Failed to lookup artist\n");
 		return 1;
@@ -72,7 +72,7 @@ public static int main(string[] args) {
 	
 	a.mbid = mba.id;
 	a.name = mba.name;
-	a.sort_name = mba.sortname;
+	a.sort_name = mba.sort_name;
 	
 	stderr.printf("Saving artist to local db\n");
 	try {

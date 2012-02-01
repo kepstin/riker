@@ -34,6 +34,7 @@ musicbrainz4_libvalamusicbrainz_la_CFLAGS = \
 	$(MB4_CFLAGS)
 musicbrainz4_libvalamusicbrainz_la_LIBADD = \
 	$(AM_LIBADD) \
+	$(GEE_LIBS) \
 	$(MB4_LIBS)
 
 
@@ -63,7 +64,8 @@ tagread_SOURCES = \
 	tagread.vala
 tagread_CFLAGS = \
 	$(AM_CFLAGS) \
-	$(GSTREAMER_CFLAGS)
+	$(GSTREAMER_CFLAGS) \
+	$(GEE_CFLAGS)
 tagread_VALAFLAGS = \
 	$(AM_VALAFLAGS) \
 	$(GSTREAMER_VALAFLAGS) \
@@ -82,6 +84,9 @@ add_artist_VALAFLAGS = \
 	$(AM_VALAFLAGS) \
 	--pkg=store \
 	--pkg=valamusicbrainz
+add_artist_CFLAGS = \
+	$(AM_CFLAGS) \
+	$(GEE_CFLAGS)
 add_artist_LDADD = \
 	$(AM_LIBADD) \
 	store/libriker-store.la \
