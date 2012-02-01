@@ -91,3 +91,7 @@ add_artist_LDADD = \
 	$(AM_LIBADD) \
 	store/libriker-store.la \
 	musicbrainz4/libvalamusicbrainz.la
+
+# Some helpers to fix up dependencies:
+store/store.vapi: store_libriker_store_la_vala.stamp
+musicbrainz4/valamusicbrainz.vapi: musicbrainz4_libvalamusicbrainz_la_vala.stamp

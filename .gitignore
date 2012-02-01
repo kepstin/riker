@@ -16,6 +16,10 @@ config.*
 libtool
 m4/*.m4
 musicbrainz4/mb4_vapi_generator
+musicbrainz4/valamusicbrainz.h
+musicbrainz4/valamusicbrainz.vapi
+stamp-h1
 store/store.h
 store/store.vapi
+add_artist
 tagread
