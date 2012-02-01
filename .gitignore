@@ -15,6 +15,7 @@ configure
 config.*
 libtool
 m4/*.m4
+musicbrainz4/mb4_vapi_generator
 store/store.h
 store/store.vapi
 tagread
