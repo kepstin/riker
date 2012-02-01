@@ -1,2 +1,2 @@
 Run 'make' to build the generator.
-Run 'make all' to build the library.
+Run 'make lib' to build the library.
