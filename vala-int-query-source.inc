@@ -14,11 +14,11 @@ public string proxy_username { set { instance -> proxy_username = value; } }
 public string proxy_password { set { instance -> proxy_password = value; } }
 
 public ReleaseList lookup_disc_id (string disc_id) {
-	return new ReleaseList.wrap (instance -> lookup_disc_id (disc_id));
+	return new ReleaseList.wrap (instance -> lookup_disc_id (disc_id), false);
 }
 
 public Release lookup_release (string release) {
-	return new Release.wrap (instance -> lookup_release (release));
+	return new Release.wrap (instance -> lookup_release (release), false);
 }
 
 public Metadata query (string entity, string? id, string? resource, ...) {
@@ -35,7 +35,7 @@ public Metadata query (string entity, string? id, string? resource, ...) {
         param_values += val;
     }
     return new Metadata.wrap (instance -> query_array(entity, id, resource, 
-									param_names.length, param_names, param_values));
+									param_names.length, param_names, param_values), false);
 }
 
 public Mb4.Query.Result last_result {
