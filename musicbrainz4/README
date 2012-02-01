@@ -1,2 +1,9 @@
-Run 'make' to build the generator.
-Run 'make lib' to build the library.
+This generator is imported from
+https://github.com/lomereiter/mb4_vapi_generator
+
+The generated files are committed to the git repository, as they will very
+rarely change, and are difficult to integrate into the build system.
+
+If you update the 'cinterface.xml' file, or update the vapi generator code,
+please run 'make sources' in this directory, then commit the updated source
+files.
