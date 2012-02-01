@@ -1,4 +1,17 @@
 #!/usr/bin/env python
+
+# Riker - a MusicBrainz-enhanced audio player
+# Copyright @ 2011 Artem Tarasov
+# 
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of version 2 of the GNU General Public
+# License as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
 import xml.etree.ElementTree
 
 # in order for this script to work, manually do the following:
