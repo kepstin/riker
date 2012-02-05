@@ -54,6 +54,8 @@ public class Store: Object {
 
 	private const string DSN_PROVIDER = "SQLite";
 	
+	private const string DSN_DESCRIPTION = "Riker music player collection database";
+
 	private const string DSN_DB_NAME = "riker-store";
 	
 	/**
@@ -100,7 +102,7 @@ public class Store: Object {
 				 * There is no database configuration for Riker,
 				 * so create a default configuration.
 				 */
-				stderr.printf("Database configuration not found, creating default.\n");
+				stderr.printf("Database configuration not found, creating default DSN.\n");
 				create_dsn();
 				try {
 					connection = Gda.Connection.open_from_dsn("RikerStore", null, Gda.ConnectionOptions.NONE);
@@ -111,6 +113,19 @@ public class Store: Object {
 				throw new StoreError.OPEN_FAILED("Failed to connect to database: " + error.message);
 			}
 		}
+
+		/* Check the database schema version */
+		var builder = new Gda.SqlBuilder(Gda.SqlStatementType.SELECT);
+		builder.select_add_field("schema_version", null, null);
+		builder.select_add_target("riker", null);
+		Gda.DataModel data;
+		try {
+			var stmt = builder.get_statement();
+			data = connection.statement_execute_select(stmt, null);
+		} catch (Error error) {
+			stderr.printf("%s %d %s\n", error.domain.to_string(), error.code, error.message);
+			throw new StoreError.OPEN_FAILED("Failed to check schema version: " + error.message);
+		}
 	}
 	
 	private void create_dsn() throws StoreError {
@@ -120,7 +135,7 @@ public class Store: Object {
 		Gda.DsnInfo dsn_info = {
 			DSN_NAME,
 			DSN_PROVIDER,
-			null,
+			DSN_DESCRIPTION,
 			cnc_string,
 			null,
 			false
