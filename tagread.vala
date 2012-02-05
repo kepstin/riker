@@ -32,7 +32,6 @@ class TagRead {
 			if (e is StoreError.CORRUPT_DB) {
 				stderr.printf("%s\n", e.message);
 				stderr.printf("To resolve this, try deleting the database file so it can be re-created.\n");
-				stderr.printf("Database path: %s\n", store.path);
 			} else {
 				stderr.printf("%s\n", e.message);
 			}
@@ -113,7 +112,7 @@ class TagRead {
 			duration = (uint) (duration_ns / 1000000);
 		}
 		
-		File file = new File.from_data(recording_mbid, release_mbid, track_position, medium_position, codec, bitrate, duration);
+		/*File file = new File.from_data(recording_mbid, release_mbid, track_position, medium_position, codec, bitrate, duration);*/
 		
 		print("recording_mbid: %s\n", recording_mbid);
 		print("release_mbid: %s\n", release_mbid);
