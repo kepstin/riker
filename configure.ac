@@ -25,7 +25,7 @@ PKG_CHECK_MODULES([SQLITE], [sqlite3])
 AC_SUBST([SQLITE_VALAFLAGS], ["--pkg=sqlite3"])
 
 PKG_CHECK_MODULES([GEE], [gee-0.8])
-AC_SUBST([GEE_VALAFLAGS], ["--pkg=gee-1.0"])
+AC_SUBST([GEE_VALAFLAGS], ["--pkg=gee-0.8"])
 
 PKG_CHECK_MODULES([MB4], [libmusicbrainz4])
 AC_SUBST([MB4_VALAFLAGS], ['--vapidir=$(srcdir)/musicbrainz4 --pkg=libmusicbrainz4'])
