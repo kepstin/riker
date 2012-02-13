@@ -123,8 +123,16 @@ public class Store: Object {
 			var stmt = builder.get_statement();
 			data = connection.statement_execute_select(stmt, null);
 		} catch (Error error) {
-			stderr.printf("%s %d %s\n", error.domain.to_string(), error.code, error.message);
-			throw new StoreError.OPEN_FAILED("Failed to check schema version: " + error.message);
+			if (error.domain == Gda.ServerProvider.error_quark() &&
+				error.code == Gda.ServerProviderError.PREPARE_STMT_ERROR) {
+				/*
+				 * This error probably means that the schema's
+				 * not loaded. So try to load it here.
+				 */
+				initialize_schema();
+			} else {
+				throw new StoreError.OPEN_FAILED("Failed to check schema version: " + error.message);
+			}
 		}
 	}
 	
