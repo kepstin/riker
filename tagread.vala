@@ -124,7 +124,7 @@ class TagRead {
 		
 		pipe.set_state(Gst.State.NULL);
 		
-		print("Performing a musicbrainz query...\n");
+		print("Performing a MusicBrainz query...\n");
 		
 		Musicbrainz.Query mb4_query = new Musicbrainz.Query("Riker/0.1 ( http://www.kepstin.ca/projects/riker )");
 		Musicbrainz.Metadata m = mb4_query.query("release", release_mbid, null, inc: "media recordings");
