@@ -14,7 +14,7 @@ http://musicbrainz.org/doc/libmusicbrainz and install it manually.
 Next you'll need the Vala compiler, valac. Version 0.14 should do it, this
 should be in your distribution packages. Also sqlite 3, glib, and gstreamer.
 Don't forget their associated development packages, if your Linux distribution
-has a habit of inconveniencing people who like to actually /use/ their
+has a habit of inconveniencing people who like to actually *use* their
 computers.
 
 Now for a more tricky bit - You will need a build of libgda from git master in
@@ -54,6 +54,7 @@ To run it:
     ./add_artist <artist mbid>
 
 (Or if you don't remember any artist MBIDs offhand, I included a default:)
+
     ./add_artist
 
 It'll go and set up the database (if you've already run tagread it'll be faster
