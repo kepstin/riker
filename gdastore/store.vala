@@ -85,6 +85,7 @@ public class Store: Object {
 	 */
 	public void open() throws StoreError {
 		/* A few helpful warnings for testers... */
+		stderr.printf("This application is using the libgda backend.\n");
 		if (SCHEMA_VERSION == 0) {
 			stderr.printf(
 "This version of Riker uses an unstable database schema. If you update Riker\n" +
@@ -122,13 +123,14 @@ public class Store: Object {
 		try {
 			var stmt = builder.get_statement();
 			data = connection.statement_execute_select(stmt, null);
+			if (data.get_n_rows() != 1) {
+				throw new StoreError.CORRUPT_DB("Riker table has wrong number of rows\n");
+			}
+			
 		} catch (Error error) {
 			if (error.domain == Gda.ServerProvider.error_quark() &&
 				error.code == Gda.ServerProviderError.PREPARE_STMT_ERROR) {
-				/*
-				 * This error probably means that the schema's
-				 * not loaded. So try to load it here.
-				 */
+				stderr.printf("The database schema doesn't appear to be initialized\n");
 				initialize_schema();
 			} else {
 				throw new StoreError.OPEN_FAILED("Failed to check schema version: " + error.message);
@@ -156,12 +158,53 @@ public class Store: Object {
 			throw new StoreError.OPEN_FAILED("Failed to create DB configuration: " + inner_error.message);
 		}
 	}
-
+	
 	/**
-	 * Load the base schema into a fresh database.
+	 * Install a new database schema.
+	 *
+	 * For now this just runs all the upgrades in order.
 	 */
 	private void initialize_schema() throws StoreError {
+		upgrade_schema(0);
+		if (SCHEMA_VERSION == 0)
+			upgrade_schema_development();
+	}
 
+	/**
+	 * Upgrade the database schema.
+	 * 
+	 * Do not call this function if the schema is currently version 0 (development).
+	 */
+	private void upgrade_schema(uint original_version) throws StoreError {
+		if (original_version < 1) {
+			stderr.printf("Upgrading to schema version 1\n");
+			// TODO: Upgrade to schema version 1
+		}
+	}
+	
+	/**
+	 * Switch from the most recent non-development schema to development.
+	 */
+	private void upgrade_schema_development() throws StoreError {
+		stderr.printf("Upgrading to development schema version\n");
+		var provider = connection.get_provider();
+		Gda.ServerOperation op;
+		try {
+			op = provider.create_operation(connection, Gda.ServerOperationType.CREATE_DB, null);
+			
+			op.set_value_at("riker", "/TABLE_DEF_P/TABLE_NAME");
+			/* schema_version column */
+			op.set_value_at("schema_version", "/FIELDS_A/@COLUMN_NAME/1");
+			op.set_value_at("integer", "/FIELDS_A/@COLUMN_TYPE/1");
+			op.set_value_at("TRUE", "/FIELDS_A/@COLUMN_NNUL/1");
+			
+			if (!provider.perform_operation(connection, op)) {
+				stderr.printf("Failed to create table \"riker\"\n");
+			}
+			stderr.printf("Created table \"riker\"\n");
+		} catch (Error e) {
+			throw new StoreError.OPEN_FAILED("Failed to create table: " + e.message);
+		}
 	}
 }
 
