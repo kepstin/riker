@@ -1,0 +1,11 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import riker
+
+riker.load_config('./config.ini')
+
+from riker.server import app
+
+app.debug = True
+app.run()
