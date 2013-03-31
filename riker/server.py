@@ -11,13 +11,14 @@ from db.models import *
 
 app = flask.Flask(__name__)
 
-@app.before_request()
+@app.before_request
 def before_request():
-    flask.g.db = sqlalchemy.orm.sessionmaker(bind = db.engine)
+    flask.g.db = db.Session()
 
-@app.after_request()
-def after_request():
+@app.after_request
+def after_request(response):
     flask.g.db.close()
+    return response
 
 @app.route('/')
 def hello_world():
